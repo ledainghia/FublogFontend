@@ -7,7 +7,7 @@ import BaseLayout from "./layouts/BaseLayout";
 
 import SuspenseLoader from "./components/SuspenseLoader";
 
-const Loader = (Component: ComponentType<any>) => (props: any) =>
+export const Loader = (Component: ComponentType<any>) => (props: any) =>
   (
     <Suspense fallback={<SuspenseLoader />}>
       <Component {...props} />
@@ -80,25 +80,25 @@ const LoginPage = Loader(lazy(() => import("./Pages/LoginPage")));
 
 const routes: RouteObject[] = [
   {
-    path: "",
+    path: "login",
     element: <BaseLayout />,
     children: [
       {
-        path: "/login",
+        path: "",
         element: <LoginPage />,
       },
     ],
   },
   {
-    path: "pages",
+    path: "",
     element: <SidebarLayout />,
     children: [
       {
-        path: "",
-        element: <Navigate to="lastest" replace />,
+        path: "home",
+        element: <Navigate to="" replace />,
       },
       {
-        path: "home",
+        path: "",
         element: <HomePage />,
       },
     ],

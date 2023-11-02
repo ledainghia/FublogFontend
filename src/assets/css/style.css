@@ -1,9 +1,8 @@
 .logo-login {
-  position: fixed;
-  top: 50px;
-  left: 69px;
-  height: 135px;
-  width: 135px;
+  position: absolute;
+  top: 2rem;
+  left: 4rem;
+  height: 15%;
 }
 
 .button {
@@ -220,4 +219,11 @@
   to {
     filter: brightness(100);
   }
+}
+
+.dot-divider {
+  width: 3px; /* Độ rộng của dấu chấm */
+  height: 3px; /* Chiều cao của dấu chấm */
+  background-color: orange; /* Màu cam */
+  border-radius: 50%; /* Làm cho nó trở thành hình tròn */
 }

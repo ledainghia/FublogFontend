@@ -2,7 +2,7 @@ import { alpha, createTheme, lighten, darken } from "@mui/material";
 import "@mui/lab/themeAugmentation";
 
 const themeColors = {
-  primary: "#FFBB5C ",
+  primary: "#FFBB5C",
   secondary: "#6E759F",
   success: "#57CA22",
   warning: "#FFA319",
@@ -801,7 +801,6 @@ export const PureLightTheme = createTheme({
     //     root: {
     //       height: 38,
     //       minHeight: 38,
-
     //       overflow: "visible",
     //     },
     //     indicator: {
@@ -822,7 +821,6 @@ export const PureLightTheme = createTheme({
     //       padding: 0,
     //       height: 38,
     //       minHeight: 38,
-
     //       borderRadius: 6,
     //       transition: "color .2s",
     //       textTransform: "capitalize",

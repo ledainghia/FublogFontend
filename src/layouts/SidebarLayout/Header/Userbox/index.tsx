@@ -1,6 +1,6 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 import {
   Avatar,
@@ -22,6 +22,9 @@ import ExpandMoreTwoToneIcon from "@mui/icons-material/ExpandMoreTwoTone";
 import AccountBoxTwoToneIcon from "@mui/icons-material/AccountBoxTwoTone";
 import LockOpenTwoToneIcon from "@mui/icons-material/LockOpenTwoTone";
 import AccountTreeTwoToneIcon from "@mui/icons-material/AccountTreeTwoTone";
+import { userLogin } from "../../../../config/TypeDefine";
+import { el } from "date-fns/locale";
+import { getUserCurrentInfo } from "../../../../APICall/apiConfig";
 
 const UserBoxButton = styled(Button)(
   ({ theme }) => `
@@ -59,11 +62,39 @@ const UserBoxDescription = styled(Typography)(
 );
 
 function HeaderUserbox() {
-  const user = {
-    name: "Catherine Pike",
-    avatar: "/static/images/avatars/1.jpg",
-    jobtitle: "Project Manager",
+  const [user, setUser] = useState<userLogin>();
+  const fetchUserInfo = async () => {
+    try {
+      const response = await getUserCurrentInfo();
+      console.log("userInfo", response.data);
+      console.log("user", user);
+      localStorage.setItem("user", JSON.stringify(response.data));
+      setUser(response.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (
+      localStorage.getItem("token") === null &&
+      sessionStorage.getItem("token") === null
+    ) {
+      return;
+    }
+    fetchUserInfo();
+  }, [setUser]);
+
+  useEffect(() => {
+    console.log(localStorage.getItem("token") === undefined);
+    // if (
+    //   localStorage.getItem("token") === null &&
+    //   sessionStorage.getItem("token") === null
+    // ) {
+    //   navigate("/login");
+    //   return;
+    // }
+  });
 
   const ref = useRef<any>(null);
   const [isOpen, setOpen] = useState<boolean>(false);
@@ -79,12 +110,12 @@ function HeaderUserbox() {
   return (
     <>
       <UserBoxButton color="secondary" ref={ref} onClick={handleOpen}>
-        <Avatar variant="rounded" alt={user.name} src={user.avatar} />
+        <Avatar variant="rounded" alt={user?.fullName} src={user?.picture} />
         <Hidden mdDown>
           <UserBoxText>
-            <UserBoxLabel variant="body1">{user.name}</UserBoxLabel>
+            <UserBoxLabel variant="body1">{user?.fullName}</UserBoxLabel>
             <UserBoxDescription variant="body2">
-              {user.jobtitle}
+              {user?.email}
             </UserBoxDescription>
           </UserBoxText>
         </Hidden>
@@ -106,11 +137,11 @@ function HeaderUserbox() {
         }}
       >
         <MenuUserBox sx={{ minWidth: 210 }} display="flex">
-          <Avatar variant="rounded" alt={user.name} src={user.avatar} />
+          <Avatar variant="rounded" alt={user?.fullName} src={user?.picture} />
           <UserBoxText>
-            <UserBoxLabel variant="body1">{user.name}</UserBoxLabel>
+            <UserBoxLabel variant="body1">{user?.fullName}</UserBoxLabel>
             <UserBoxDescription variant="body2">
-              {user.jobtitle}
+              {user?.email}
             </UserBoxDescription>
           </UserBoxText>
         </MenuUserBox>
@@ -135,7 +166,14 @@ function HeaderUserbox() {
         </List>
         <Divider />
         <Box sx={{ m: 1 }}>
-          <Button color="primary" fullWidth>
+          <Button
+            color="primary"
+            fullWidth
+            onClick={() => {
+              sessionStorage.clear();
+              localStorage.clear();
+            }}
+          >
             <LockOpenTwoToneIcon sx={{ mr: 1 }} />
             Sign out
           </Button>

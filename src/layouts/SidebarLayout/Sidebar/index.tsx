@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 
 import SidebarMenu from "./SidebarMenu";
+import Logo from "../../../components/LogoSign";
 
 const SidebarWrapper = styled(Box)(
   ({ theme }) => `
@@ -47,27 +48,28 @@ function Sidebar() {
           top: 0,
           background:
             theme.palette.mode === "dark"
-              ? alpha(lighten("white", 0.1), 0.5)
+              ? alpha(lighten("#fff", 0.1), 0.5)
               : darken(theme.colors.alpha.black[100], 0.5),
           boxShadow:
             theme.palette.mode === "dark" ? theme.sidebar.boxShadow : "none",
         }}
       >
         <Scrollbar>
-          <Box mt={3}>
+          <Box>
             <Box
               mx={2}
               sx={{
                 width: 52,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
-              {/* <Logo /> */}
+              <Logo />
             </Box>
           </Box>
           <Divider
             sx={{
-              mt: theme.spacing(3),
-              mx: theme.spacing(2),
               background: theme.colors.alpha.trueWhite[10],
             }}
           />
@@ -78,19 +80,6 @@ function Sidebar() {
             background: theme.colors.alpha.trueWhite[10],
           }}
         />
-        <Box p={2}>
-          <Button
-            href="https://bloomui.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            variant="contained"
-            color="warning"
-            size="small"
-            fullWidth
-          >
-            Upgrade to PRO
-          </Button>
-        </Box>
       </SidebarWrapper>
       <Drawer
         sx={{
@@ -111,20 +100,18 @@ function Sidebar() {
           }}
         >
           <Scrollbar>
-            <Box mt={3}>
+            <Box>
               <Box
                 mx={2}
                 sx={{
                   width: 52,
                 }}
               >
-                {/* <Logo /> */}
+                <Logo />
               </Box>
             </Box>
             <Divider
               sx={{
-                mt: theme.spacing(3),
-                mx: theme.spacing(2),
                 background: theme.colors.alpha.trueWhite[10],
               }}
             />

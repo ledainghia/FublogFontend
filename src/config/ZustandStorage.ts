@@ -76,3 +76,83 @@ export const useButtonNavRefStore = create<ButtonNavRefStore>((set) => ({
   buttonNavRef: null,
   setButtonNavRef: (ref) => set({ buttonNavRef: ref }),
 }));
+
+type toastErrorStore = {
+  toastError: string[];
+  addToastError: (error: string) => void;
+  shiftToastError: () => void;
+};
+
+export const useToastErrorStore = create<toastErrorStore>((set) => ({
+  toastError: [],
+  addToastError: (error) => {
+    set((state) => ({
+      toastError: [...state.toastError, error],
+    }));
+  },
+  shiftToastError: () => {
+    set((state) => ({
+      toastError: state.toastError.slice(1),
+    }));
+  },
+}));
+
+type toastSuccessStore = {
+  toastSuccess: string[];
+  addToastSuccess: (success: string) => void;
+  shiftToastSuccess: () => void;
+};
+
+export const useToastSuccessStore = create<toastSuccessStore>((set) => ({
+  toastSuccess: [],
+  addToastSuccess: (success) => {
+    set((state) => ({
+      toastSuccess: [...state.toastSuccess, success],
+    }));
+  },
+  shiftToastSuccess: () => {
+    set((state) => ({
+      toastSuccess: state.toastSuccess.slice(1),
+    }));
+  },
+}));
+
+type toastWarningStore = {
+  toastWarning: string[];
+  addToastWarning: (warning: string) => void;
+  shiftToastWarning: () => void;
+};
+
+export const useToastWarningStore = create<toastWarningStore>((set) => ({
+  toastWarning: [],
+  addToastWarning: (warning) => {
+    set((state) => ({
+      toastWarning: [...state.toastWarning, warning],
+    }));
+  },
+  shiftToastWarning: () => {
+    set((state) => ({
+      toastWarning: state.toastWarning.slice(1),
+    }));
+  },
+}));
+
+type toastInfoStore = {
+  toastInfo: string[];
+  addToastInfo: (info: string) => void;
+  shiftToastInfo: () => void;
+};
+
+export const useToastInfoStore = create<toastInfoStore>((set) => ({
+  toastInfo: [],
+  addToastInfo: (info) => {
+    set((state) => ({
+      toastInfo: [...state.toastInfo, info],
+    }));
+  },
+  shiftToastInfo: () => {
+    set((state) => ({
+      toastInfo: state.toastInfo.slice(1),
+    }));
+  },
+}));

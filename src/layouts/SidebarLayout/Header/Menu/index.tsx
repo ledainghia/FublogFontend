@@ -23,8 +23,8 @@ const ListWrapper = styled(Box)(
             &.MuiListItem-indicators {
                 padding: ${theme.spacing(1, 2)};
             
-                .MuiListItemText-root {
-                    .MuiTypography-root {
+                .MuiButtonBase-root {
+                    .MuiButtonBase-root {
                         &:before {
                             height: 4px;
                             width: 22px;
