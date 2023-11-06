@@ -1,7 +1,14 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
+// vite.config.js
+import { createRequire } from "node:module";
+const require = createRequire(import.meta.url);
 
-// https://vitejs.dev/config/
+import { defineConfig } from "vite";
+import ckeditor5 from "@ckeditor/vite-plugin-ckeditor5";
+import react from "@vitejs/plugin-react-swc";
+
 export default defineConfig({
-  plugins: [react()],
-})
+  plugins: [
+    ckeditor5({ theme: require.resolve("@ckeditor/ckeditor5-theme-lark") }),
+    react(),
+  ],
+});

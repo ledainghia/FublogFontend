@@ -41,8 +41,8 @@ export default function PostCard({ blogPost }: props) {
     <>
       <CardMedia
         component="img"
-        sx={{ width: 250, objectFit: "contain" }}
-        image={blogPost.image}
+        sx={{ width: 250, objectFit: "contain", padding: 1 }}
+        image={blogPost.picture}
         alt={blogPost.title}
         loading="lazy"
       />
@@ -110,30 +110,16 @@ export default function PostCard({ blogPost }: props) {
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
-          <BootstrapTooltip title="1,4K Views">
-            <IconButton aria-label="add to favorites">
-              <FavoriteIcon />
-              <Typography
-                ml={1}
-                variant="subtitle1"
-                color="text.secondary"
-                component="div"
-              >
-                1,4K
-              </Typography>
-            </IconButton>
-          </BootstrapTooltip>
-
-          <BootstrapTooltip title="1,4K Views">
+          <BootstrapTooltip title={`${blogPost.views} views`}>
             <IconButton aria-label="share">
-              <BookmarksIcon />
+              <VisibilityIcon />
               <Typography
                 ml={1}
                 variant="subtitle1"
                 color="text.secondary"
                 component="div"
               >
-                1,4K
+                {blogPost.views}
               </Typography>
             </IconButton>
           </BootstrapTooltip>
@@ -147,14 +133,14 @@ export default function PostCard({ blogPost }: props) {
                 color="text.secondary"
                 component="div"
               >
-                1,4K
+                {blogPost.votes}
               </Typography>
             </IconButton>
           </BootstrapTooltip>
 
           <BootstrapTooltip title="1,4K Views">
             <IconButton aria-label="share">
-              <VisibilityIcon />
+              <BookmarksIcon />
               <Typography
                 ml={1}
                 variant="subtitle1"

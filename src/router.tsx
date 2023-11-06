@@ -6,6 +6,9 @@ import SidebarLayout from "./layouts/SidebarLayout";
 import BaseLayout from "./layouts/BaseLayout";
 
 import SuspenseLoader from "./components/SuspenseLoader";
+import WriteBlog from "./Pages/WriteBlog";
+import Navigation from "./Pages/Navigation";
+import AboutProject from "./components/aboutProject";
 
 export const Loader = (Component: ComponentType<any>) => (props: any) =>
   (
@@ -17,7 +20,7 @@ export const Loader = (Component: ComponentType<any>) => (props: any) =>
 // Pages
 const HomePage = Loader(lazy(() => import("./Pages/HomePage")));
 const LoginPage = Loader(lazy(() => import("./Pages/LoginPage")));
-
+const aboutProject = Loader(lazy(() => import("./components/aboutProject")));
 // const Overview = Loader(lazy(() => import('src/content/overview')));
 
 // Dashboards
@@ -95,11 +98,19 @@ const routes: RouteObject[] = [
     children: [
       {
         path: "home",
-        element: <Navigate to="" replace />,
+        element: <HomePage />,
       },
       {
-        path: "",
-        element: <HomePage />,
+        path: "testing",
+        element: <AboutProject />,
+      },
+      {
+        path: "writeblog",
+        element: <WriteBlog />,
+      },
+      {
+        path: "test",
+        element: <Navigation />,
       },
     ],
   },

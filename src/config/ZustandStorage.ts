@@ -156,3 +156,13 @@ export const useToastInfoStore = create<toastInfoStore>((set) => ({
     }));
   },
 }));
+
+interface tabNavStore {
+  tabIndex: number;
+  setTabIndex: (value: number) => void;
+}
+
+export const useTabNavStore = create<tabNavStore>((set) => ({
+  tabIndex: 0,
+  setTabIndex: (value: number) => set({ tabIndex: value }),
+}));

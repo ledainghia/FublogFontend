@@ -129,3 +129,7 @@ export const getAllBlog = ({ page, size }: { page: number; size: number }) => {
 export const getUserCurrentInfo = () => {
   return axiosInstance.get("/api/v1/auth/getUserInfo");
 };
+
+export const getAllBlogNotPagination = () => {
+  return axios.get(BASE_URL + "/api/v1/auth/blogPosts/getAllBlog");
+};

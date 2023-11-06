@@ -8,9 +8,9 @@ export interface blog {
   approvedBy: number;
   status: boolean;
   isApproved: boolean;
-  image: string;
+  picture: string;
   views: number;
-  voteCount: number;
+  votes: [];
   postComments: [];
   tagList: tagList[];
   postId: number;

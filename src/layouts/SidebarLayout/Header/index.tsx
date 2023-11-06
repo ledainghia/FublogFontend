@@ -24,6 +24,9 @@ import HeaderUserbox from "./Userbox";
 import HeaderMenu from "./Menu";
 import logo from "../../../assets/images/logo-color.svg";
 import { checkUser } from "../../../tools/CheckUser";
+import { useTabNavStore } from "../../../config/ZustandStorage";
+import { Link } from "react-router-dom";
+import HeaderNotifications from "./Buttons/Notifications";
 const HeaderWrapper = styled(Box)(
   ({ theme }) => `
         height: ${theme.header.height};
@@ -55,13 +58,20 @@ const fadeImages = [
   },
 ];
 
+function a11yProps(index: number) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
 function Header() {
   const { sidebarToggle, toggleSidebar } = useContext(SidebarContext);
   const theme = useTheme();
-  const [value, setValue] = useState(0);
+  const { tabIndex, setTabIndex } = useTabNavStore();
+
   const check = checkUser();
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
+    setTabIndex(newValue);
   };
   return (
     <>
@@ -91,23 +101,32 @@ function Header() {
           spacing={2}
         >
           <img src={logo} height={80} alt="" />
-          <Tabs value={value} onChange={handleChange} centered>
-            <Tab label="Content creater" />
-            <Tab label="newest" />
-            <Tab label="trending" />
-            <Tab label="category" />
-            <Tab label="Editor's pick" />
-            <Tab label="Bookmark" />
-            <Tab label="Write Blog" />
-            <Tab label="My profile" />
+          <Tabs value={tabIndex} onChange={handleChange} centered>
+            <Tab label="Content creater" {...a11yProps(0)} />
+            <Tab label="newest" {...a11yProps(1)} />
+            <Tab label="trending" {...a11yProps(2)} />
+            <Tab label="Bookmark" {...a11yProps(3)} />
+            <Tab label="Write Blog" {...a11yProps(4)} />
+            <Tab label="My profile" {...a11yProps(5)} />
           </Tabs>
         </Stack>
         <Box display="flex" alignItems="center">
           <HeaderButtons />
           {!check ? (
-            <Button variant="contained">Login</Button>
+            <>
+              <Button variant="contained">
+                <Link style={{ textDecoration: "none" }} to={"/login"}>
+                  Login
+                </Link>
+              </Button>
+            </>
           ) : (
-            <HeaderUserbox />
+            <>
+              <Box sx={{ mx: 0.5 }} component="span">
+                <HeaderNotifications />
+              </Box>
+              <HeaderUserbox />
+            </>
           )}
 
           <Box

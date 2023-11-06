@@ -14,31 +14,30 @@ import {
 
 import { Helmet } from "react-helmet-async";
 
+import SearchTwoToneIcon from "@mui/icons-material/SearchTwoTone";
 import { ChangeEvent, Suspense, useCallback, useEffect, useState } from "react";
 import { getAllBlog, getAllBlogNotPagination } from "../APICall/apiConfig";
 import PostCard from "../components/PostCard";
+import SuspenseLoader from "../components/SuspenseLoader";
 import { blog } from "../config/TypeDefine";
 import { extractTextFromHtml } from "../tools/extractTextFromHtml";
-import SuspenseLoader from "../components/SuspenseLoader";
-import { set } from "nprogress";
-import SearchTwoToneIcon from "@mui/icons-material/SearchTwoTone";
 
 const SearchInputWrapper = styled(TextField)(
   ({ theme }) => `
-    background: ${theme.colors.alpha.white[100]};
-
-    .MuiInputBase-input {
-        font-size: ${theme.typography.pxToRem(17)};
-    }
-`
+      background: ${theme.colors.alpha.white[100]};
+  
+      .MuiInputBase-input {
+          font-size: ${theme.typography.pxToRem(17)};
+      }
+  `
 );
 
-export default function HomePage() {
+export default function Trending() {
   const [posts, setPosts] = useState<blog[]>([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   let limitPostPerPage: number = 10;
-  const [update, setUpdate] = useState(false);
+  const [update] = useState(false);
   useEffect(() => {
     const fecthData = async () => {
       try {
@@ -58,8 +57,10 @@ export default function HomePage() {
             allBlogPosts.content = extractTextFromHtml(allBlogPosts.content);
             return allBlogPosts;
           });
-
-          setPosts(blogPosts);
+          const blogPostsSort = blogPosts.sort(
+            (a: blog, b: blog) => b.views - a.views
+          );
+          setPosts(blogPostsSort);
           setTotalPages(Math.ceil(blogPostCount / limitPostPerPage));
         }
         console.log(res);
@@ -124,82 +125,76 @@ export default function HomePage() {
           alignItems="stretch"
           spacing={4}
         >
-          <Grid item xs={12}>
-            <Stack direction={{ xs: "column" }} display={{ xs: "flex" }}>
-              <CardHeader
-                title={<Typography variant="h3">Newest</Typography>}
-                action={
-                  <>
-                    <SearchInputWrapper
-                      sx={{ backgroundColor: "transparent" }}
-                      value={searchValue}
-                      autoFocus={true}
-                      onChange={handleSearchChange}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <SearchTwoToneIcon />
-                          </InputAdornment>
-                        ),
-                      }}
-                      placeholder="Search terms here..."
-                      fullWidth
-                      label="Search"
-                    />
-                  </>
-                }
-              />
-              <Card sx={{ display: "flex", flexDirection: "column" }}>
-                {posts &&
-                  posts
-                    .filter((post: blog) =>
-                      post.title
-                        .toLowerCase()
-                        .includes(searchValue.toLowerCase())
-                    )
-                    .slice(
-                      (page - 1) * limitPostPerPage,
-                      page * limitPostPerPage
-                    )
-                    .map((post: blog) => {
-                      return (
-                        <>
-                          <Card>
+          <Suspense fallback={<SuspenseLoader />}>
+            <Grid item xs={12}>
+              <Stack direction={{ xs: "column" }} display={{ xs: "flex" }}>
+                <CardHeader
+                  title={<Typography variant="h3">Trending</Typography>}
+                  action={
+                    <>
+                      <SearchInputWrapper
+                        value={searchValue}
+                        autoFocus={true}
+                        onChange={handleSearchChange}
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <SearchTwoToneIcon />
+                            </InputAdornment>
+                          ),
+                        }}
+                        placeholder="Search terms here..."
+                        fullWidth
+                        label="Search"
+                      />
+                    </>
+                  }
+                />
+                <Card sx={{ display: "flex", flexDirection: "column" }}>
+                  {posts &&
+                    posts
+                      .filter((post: blog) =>
+                        post.title
+                          .toLowerCase()
+                          .includes(searchValue.toLowerCase())
+                      )
+                      .slice(
+                        (page - 1) * limitPostPerPage,
+                        page * limitPostPerPage
+                      )
+                      .map((post: blog) => {
+                        return (
+                          <>
                             <div
                               style={{
                                 display: "flex",
                                 flexDirection: "row",
                                 height: 195,
                               }}
+                              key={post.postId}
                             >
-                              <PostCard key={post.postId} blogPost={post} />
+                              <PostCard blogPost={post} />
                             </div>
                             <Divider />
-                          </Card>
-                        </>
-                      );
-                    })}
-              </Card>
-            </Stack>
+                          </>
+                        );
+                      })}
+                </Card>
+              </Stack>
+            </Grid>
+          </Suspense>
+
+          <Grid item xs={12}>
+            <Pagination
+              count={totalPages}
+              page={page}
+              onChange={handlePageChange}
+              color="primary"
+              style={{ display: "flex", justifyContent: "center" }}
+              variant="outlined"
+              shape="rounded"
+            />
           </Grid>
-          {!page && (
-            <Grid item xs={12}>
-              <div className="custom-loader"></div>
-            </Grid>
-          )}
-          {page && (
-            <Grid item xs={12}>
-              <Pagination
-                count={totalPages}
-                page={page}
-                onChange={handlePageChange}
-                color="primary"
-                style={{ display: "flex", justifyContent: "center" }}
-                variant="outlined"
-                shape="rounded"
-              />
-            </Grid>
-          )}
         </Grid>
       </Container>
     </>

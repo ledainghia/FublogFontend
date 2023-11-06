@@ -4,6 +4,7 @@ import { Outlet } from "react-router-dom";
 
 import Sidebar from "./Sidebar";
 import Header from "./Header";
+import AboutProject from "../../components/aboutProject";
 
 interface SidebarLayoutProps {
   children?: ReactNode;
@@ -49,7 +50,7 @@ const SidebarLayout: FC<SidebarLayoutProps> = () => {
             zIndex: 5,
             display: "block",
             flex: 1,
-            pt: `${theme.header.height}`,
+
             // [theme.breakpoints.up("lg")]: {
             //   ml: `${theme.sidebar.width}`,
             // },
@@ -59,6 +60,7 @@ const SidebarLayout: FC<SidebarLayoutProps> = () => {
             <Outlet />
           </Box>
         </Box>
+        <AboutProject></AboutProject>
       </Box>
     </>
   );
