@@ -252,3 +252,133 @@
     inset: 0;
   }
 }
+
+a {
+  text-decoration: none !important;
+}
+
+a:link {
+  color: #223354;
+}
+
+a:visited {
+  color: #223354;
+}
+
+a:hover {
+  color: #ffbb5c;
+}
+
+a:active {
+  color: #ffbb5c;
+}
+
+.preview_content .ck.ck-editor__main > .ck-editor__editable:not(.ck-focused) {
+  border: none !important;
+}
+
+.preview_content
+  .ck-rounded-corners
+  :is(.ck.ck-editor__top .ck-sticky-panel .ck-toolbar),
+.ck.ck-editor__top .ck-sticky-panel .ck-toolbar.ck-rounded-corners {
+  border: none !important;
+}
+
+.post .meta {
+  font-size: 14px;
+  color: #9faabb;
+}
+.post .meta a {
+  color: #9faabb;
+  font-weight: 400;
+}
+.post .meta a:hover {
+  color: #ffa94d;
+}
+.post .meta i {
+  vertical-align: middle;
+}
+.post .meta li:last-child:after {
+  content: "";
+  display: none;
+}
+.post .meta li:after {
+  content: "";
+  display: inline-block;
+  background-color: #ffa94d;
+  border-radius: 50%;
+  margin-left: 1rem;
+  height: 3px;
+  vertical-align: middle;
+  position: relative;
+  top: -1px;
+  width: 3px;
+}
+.post .meta li:not(:last-child) {
+  margin-right: 0.8rem;
+}
+.post .meta li img.author {
+  margin-right: 12px;
+  vertical-align: middle;
+}
+
+.post-single .featured-image {
+  margin-bottom: 30px;
+}
+.post-single .featured-image img {
+  border-radius: 10px;
+}
+
+.list-inline-item {
+  display: inline-block;
+}
+
+ul {
+  display: block;
+  list-style-type: disc;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  padding-inline-start: 0;
+}
+
+/* Hide all elements with display: none */
+/* Hide all div elements inside div with class preview_tableofcontent */
+.preview_tableofcontent .table-of-contents.ck-widget.ck-widget_selected ~ * {
+  display: none;
+}
+
+ck ck-content ck-editor__editable ck-rounded-corners ck-editor__editable_inline ck-read-only ck-column-resize_disabled ck-blurred
+/* Display block only for div with specific class */
+.preview_tableofcontent .table-of-contents.ck-widget.ck-widget_selected {
+  display: block;
+}
+
+.preview_tableofcontent .ck-editor__editable .ck-widget.table-of-contents {
+  border: none !important;
+}
+
+.preview_tableofcontent
+  .ck.ck-editor__editable.ck-blurred
+  .ck-widget.ck-widget_selected,
+.ck.ck-editor__editable.ck-blurred .ck-widget.ck-widget_selected:hover {
+  outline: none !important;
+}
+
+.preview_content .ck-editor__editable .ck-widget.table-of-contents {
+  background-color: transparent !important;
+}
+
+.ck-editor__editable .ck-widget.table-of-contents {
+  background-color: transparent !important;
+}
+
+.preview_tableofcontent.ck-editor__editable
+  .ck-widget.table-of-contents[data-table-of-contents-label]::after {
+  content: attr() !important;
+  font-size: 14px;
+  color: #9faabb;
+  font-weight: 400;
+  margin-left: 0.5rem;
+}

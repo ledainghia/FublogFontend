@@ -110,6 +110,9 @@ export const getAllUserByGold = (page: number, size: number) => {
     BASE_URL + "/api/v1/auth/user/getAllUserByGold/" + page + "/" + size
   );
 };
+export const getAllUserByPoint = () => {
+  return axios.get(BASE_URL + "/api/v1/auth/user/getAllUserByPoint");
+};
 export const getAllUserBySilver = (page: number, size: number) => {
   return axios.get(
     BASE_URL + "/api/v1/auth/user/getAllUserBySilver/" + page + "/" + size
@@ -132,4 +135,12 @@ export const getUserCurrentInfo = () => {
 
 export const getAllBlogNotPagination = () => {
   return axios.get(BASE_URL + "/api/v1/auth/blogPosts/getAllBlog");
+};
+
+export const getCategory = () => {
+  return axios.get(BASE_URL + "/api/v1/auth/category/view");
+};
+
+export const insertPost = (data: any) => {
+  return axiosInstance.post("/api/v1/auth/blogPosts/insert", data);
 };

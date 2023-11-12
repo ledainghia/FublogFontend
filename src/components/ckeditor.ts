@@ -54,6 +54,7 @@ import { SelectAll } from "@ckeditor/ckeditor5-select-all";
 import { ShowBlocks } from "@ckeditor/ckeditor5-show-blocks";
 import { SpecialCharacters } from "@ckeditor/ckeditor5-special-characters";
 import { Style } from "@ckeditor/ckeditor5-style";
+import { TableOfContents } from "@ckeditor/ckeditor5-document-outline";
 import {
   Table,
   TableCaption,
@@ -70,6 +71,7 @@ import { WordCount } from "@ckeditor/ckeditor5-word-count";
 
 class Editor extends ClassicEditor {
   public static override builtinPlugins = [
+    Heading,
     Alignment,
     AutoImage,
     AutoLink,
@@ -125,9 +127,12 @@ class Editor extends ClassicEditor {
 
     Underline,
     WordCount,
+    TableOfContents,
   ];
 
   public static override defaultConfig = {
+    licenseKey:
+      "K1JiMWRUODhvcytnQnk4Yy8vYno3aHAvSXpEaklXc3ZYRFFvcGpuQ0dCVDdTUFJmMmJxREFxRlN3dGJoLU1qQXlNekV5TURrPQ==",
     toolbar: {
       items: [
         "heading",
@@ -171,6 +176,7 @@ class Editor extends ClassicEditor {
         "selectAll",
         "showBlocks",
         "specialCharacters",
+        "tableOfContents",
         "|",
         "-",
 

@@ -9,6 +9,12 @@ import SuspenseLoader from "./components/SuspenseLoader";
 import WriteBlog from "./Pages/WriteBlog";
 import Navigation from "./Pages/Navigation";
 import AboutProject from "./components/aboutProject";
+import SingleBlog from "./Pages/SingleBlog";
+import YourComponent from "./tools/tableOfContentsReplace";
+import Profile from "./Pages/Profile";
+import MyProfile from "./Pages/MyProfile";
+import AccountSettings from "./Pages/MyProfile/AccountSettings";
+import Wall from "./Pages/MyProfile/Wall";
 
 export const Loader = (Component: ComponentType<any>) => (props: any) =>
   (
@@ -105,6 +111,10 @@ const routes: RouteObject[] = [
         element: <AboutProject />,
       },
       {
+        path: "newest",
+        element: <HomePage />,
+      },
+      {
         path: "writeblog",
         element: <WriteBlog />,
       },
@@ -112,6 +122,30 @@ const routes: RouteObject[] = [
         path: "test",
         element: <Navigation />,
       },
+      {
+        path: "blog/:id",
+        element: <SingleBlog />,
+      },
+      {
+        path: "profile/:userID",
+        element: <Profile />,
+      },
+    ],
+  },
+
+  {
+    path: "myprofile",
+    element: <BaseLayout />,
+    children: [
+      {
+        path: "",
+        element: <Navigate to={"userprofile"} />,
+      },
+      {
+        path: "accountsettings",
+        element: <MyProfile children={<AccountSettings />} />,
+      },
+      { path: "userprofile", element: <MyProfile children={<Wall />} /> },
     ],
   },
 ];

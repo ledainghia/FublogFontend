@@ -1,0 +1,43 @@
+.diamond-text {
+  width: 200px;
+  height: 200px;
+  background-color: #3498db;
+  transform: rotate(45deg);
+  margin: 50px;
+  text-align: center;
+  line-height: 200px;
+  color: #fff;
+}
+
+.diamond-text {
+  font-weight: 900;
+
+  color: transparent;
+  background-image: url("../images/texture/diamond.jpg.png");
+  background-size: contain;
+  -webkit-background-clip: text;
+  background-clip: text;
+  mask-image: url("../images/texture/diamond.jpg.png");
+}
+
+.gold-text {
+  font-weight: 900;
+
+  color: transparent;
+  background-image: url("https://media.istockphoto.com/id/802198182/photo/golden-texture-background.jpg?s=612x612&w=0&k=20&c=wVIhHLCSq3TONnnHluMF3mv2KmhQ3PW-bM1Rj7d60WU=");
+  background-size: contain;
+  -webkit-background-clip: text;
+  background-clip: text;
+  mask-image: url("https://media.istockphoto.com/id/802198182/photo/golden-texture-background.jpg?s=612x612&w=0&k=20&c=wVIhHLCSq3TONnnHluMF3mv2KmhQ3PW-bM1Rj7d60WU=");
+}
+
+.silver-text {
+  font-weight: 900;
+
+  color: transparent;
+  background-image: url("https://media.istockphoto.com/id/679479658/photo/silver-foil-texture-background.jpg?s=612x612&w=0&k=20&c=8M_Mo9Ig_OFsr4wTFtfZq8KziQYewrQEtuMCk250N7A=");
+  background-size: contain;
+  -webkit-background-clip: text;
+  background-clip: text;
+  mask-image: url("https://media.istockphoto.com/id/679479658/photo/silver-foil-texture-background.jpg?s=612x612&w=0&k=20&c=8M_Mo9Ig_OFsr4wTFtfZq8KziQYewrQEtuMCk250N7A=");
+}

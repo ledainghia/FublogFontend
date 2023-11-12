@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import {
   Box,
@@ -14,10 +14,11 @@ import {
   Tab,
   Button,
 } from "@mui/material";
+import BottomNavigation from "@mui/material/BottomNavigation";
 import MenuTwoToneIcon from "@mui/icons-material/MenuTwoTone";
 import { SidebarContext } from "../../../contexts/SidebarContext";
 import CloseTwoToneIcon from "@mui/icons-material/CloseTwoTone";
-import { Fade, Slide } from "react-slideshow-image";
+import { Fade } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
 import HeaderButtons from "./Buttons";
 import HeaderUserbox from "./Userbox";
@@ -25,7 +26,7 @@ import HeaderMenu from "./Menu";
 import logo from "../../../assets/images/logo-color.svg";
 import { checkUser } from "../../../tools/CheckUser";
 import { useTabNavStore } from "../../../config/ZustandStorage";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import HeaderNotifications from "./Buttons/Notifications";
 const HeaderWrapper = styled(Box)(
   ({ theme }) => `
@@ -68,17 +69,21 @@ function Header() {
   const { sidebarToggle, toggleSidebar } = useContext(SidebarContext);
   const theme = useTheme();
   const { tabIndex, setTabIndex } = useTabNavStore();
-
+  const naviagate = useNavigate();
   const check = checkUser();
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabIndex(newValue);
   };
+  const location = useLocation();
+  console.log(location.pathname);
+
   return (
     <>
       <HeaderWrapper
         display="flex"
         alignItems="center"
         sx={{
+          zIndex: 100,
           boxShadow:
             theme.palette.mode === "dark"
               ? `0 1px 0 ${alpha(
@@ -101,14 +106,49 @@ function Header() {
           spacing={2}
         >
           <img src={logo} height={80} alt="" />
-          <Tabs value={tabIndex} onChange={handleChange} centered>
-            <Tab label="Content creater" {...a11yProps(0)} />
-            <Tab label="newest" {...a11yProps(1)} />
-            <Tab label="trending" {...a11yProps(2)} />
-            <Tab label="Bookmark" {...a11yProps(3)} />
-            <Tab label="Write Blog" {...a11yProps(4)} />
-            <Tab label="My profile" {...a11yProps(5)} />
+          <Tabs
+            value={tabIndex}
+            onChange={handleChange}
+            variant="scrollable"
+            scrollButtons="auto"
+          >
+            <Tab
+              label="Content creater"
+              {...a11yProps(0)}
+              onClick={() => naviagate("/test")}
+            />
+            <Tab
+              label="newest"
+              {...a11yProps(1)}
+              onClick={() => naviagate("/test")}
+            />
+            <Tab
+              label="trending"
+              {...a11yProps(2)}
+              onClick={() => naviagate("/test")}
+            />
+            <Tab
+              label="Following"
+              {...a11yProps(3)}
+              onClick={() => naviagate("/test")}
+            />
+            <Tab
+              label="Bookmark"
+              {...a11yProps(4)}
+              onClick={() => naviagate("/test")}
+            />
+            <Tab
+              label="Write Blog"
+              {...a11yProps(5)}
+              onClick={() => naviagate("/test")}
+            />
+            <Tab
+              label="My profile"
+              {...a11yProps(6)}
+              onClick={() => naviagate("/myprofile")}
+            />
           </Tabs>
+          {/* <HeaderMenu /> */}
         </Stack>
         <Box display="flex" alignItems="center">
           <HeaderButtons />
@@ -148,7 +188,12 @@ function Header() {
           </Box>
         </Box>
       </HeaderWrapper>
-      <div className="slide-container">
+      <div
+        className="slide-container"
+        style={
+          location.pathname.includes("myprofile") ? { display: "none" } : {}
+        }
+      >
         <Fade autoplay nextArrow={<></>}>
           {fadeImages.map((fadeImage, index) => (
             <div key={index}>

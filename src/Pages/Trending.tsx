@@ -21,6 +21,7 @@ import PostCard from "../components/PostCard";
 import SuspenseLoader from "../components/SuspenseLoader";
 import { blog } from "../config/TypeDefine";
 import { extractTextFromHtml } from "../tools/extractTextFromHtml";
+import Loading from "../components/Loading";
 
 const SearchInputWrapper = styled(TextField)(
   ({ theme }) => `
@@ -179,6 +180,8 @@ export default function Trending() {
                           </>
                         );
                       })}
+
+                  {posts.length === 0 && <Loading />}
                 </Card>
               </Stack>
             </Grid>

@@ -25,6 +25,7 @@ export interface tagList {
 }
 
 export interface userLogin {
+  username: string;
   id: number;
   user: string;
   email: string;
@@ -32,4 +33,15 @@ export interface userLogin {
   roles: [];
   fullName: string;
   picture: string;
+  ranking: string;
+  point: number;
+  countViewOfBlog: number;
+  countVoteOfBlog: number;
 }
+
+export type categories = {
+  lable: string;
+  categoryId: number;
+  categoryName: string;
+  parentCategoryId: number | null;
+};

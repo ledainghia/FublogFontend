@@ -4,6 +4,7 @@ import { useTabNavStore } from "../config/ZustandStorage";
 
 import SuspenseLoader from "../components/SuspenseLoader";
 import RankingContentCreator from "./RankingContentCreator";
+import MyProfile from "./MyProfile";
 
 export const Loader = (Component: ComponentType<any>) => (props: any) =>
   (
@@ -54,8 +55,11 @@ export default function Navigation() {
       <CustomTabPanel value={tabIndex} index={2}>
         <Trending />
       </CustomTabPanel>
-      <CustomTabPanel value={tabIndex} index={4}>
+      <CustomTabPanel value={tabIndex} index={5}>
         <WriteBlog />
+      </CustomTabPanel>
+      <CustomTabPanel value={tabIndex} index={6}>
+        <MyProfile />
       </CustomTabPanel>
     </>
   );

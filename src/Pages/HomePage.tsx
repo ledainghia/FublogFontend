@@ -22,6 +22,7 @@ import { extractTextFromHtml } from "../tools/extractTextFromHtml";
 import SuspenseLoader from "../components/SuspenseLoader";
 import { set } from "nprogress";
 import SearchTwoToneIcon from "@mui/icons-material/SearchTwoTone";
+import Loading from "../components/Loading";
 
 const SearchInputWrapper = styled(TextField)(
   ({ theme }) => `
@@ -179,6 +180,7 @@ export default function HomePage() {
                         </>
                       );
                     })}
+                {posts.length === 0 && <Loading />}
               </Card>
             </Stack>
           </Grid>

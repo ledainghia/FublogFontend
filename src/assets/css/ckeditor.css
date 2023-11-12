@@ -1,0 +1,4 @@
+/* custom-ckeditor.css */
+.ck.ck-editor {
+  border: none !important;
+}

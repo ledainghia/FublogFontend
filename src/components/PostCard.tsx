@@ -21,6 +21,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import { blog } from "../config/TypeDefine";
 import EstimatedReadingTime from "../tools/EstimatedReadingTime";
 import PostPreview from "../tools/ContentPreview";
+import { Link } from "react-router-dom";
 const BootstrapTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -63,13 +64,15 @@ export default function PostCard({ blogPost }: props) {
               divider={<Divider orientation="vertical" flexItem />}
               spacing={2}
             >
-              <Typography
-                variant="subtitle1"
-                color="text.secondary"
-                component="div"
-              >
-                {blogPost.user.fullName}
-              </Typography>
+              <Link to={`/profile/${blogPost?.user.id}`}>
+                <Typography
+                  variant="subtitle1"
+                  color="text.secondary"
+                  component="div"
+                >
+                  {blogPost.user.fullName}
+                </Typography>
+              </Link>
               <Typography
                 variant="subtitle1"
                 color="text.secondary"
@@ -95,7 +98,7 @@ export default function PostCard({ blogPost }: props) {
           </Stack>
 
           <Typography sx={{ mt: 1 }} component="div" variant="h4">
-            {blogPost.title}
+            <Link to={`/blog/${blogPost.postId}`}>{blogPost.title}</Link>
           </Typography>
           <Typography
             mt={1}
