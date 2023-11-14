@@ -48,7 +48,7 @@ export default function PostCard({ blogPost }: props) {
         loading="lazy"
       />
       <Box sx={{ display: "flex", flexDirection: "column" }}>
-        <CardContent sx={{ flex: "1 0 auto" }}>
+        <CardContent>
           <Stack
             direction={{ xs: "row", sm: "row" }}
             display={{ xs: "flex" }}
@@ -111,8 +111,6 @@ export default function PostCard({ blogPost }: props) {
               maxLength={100}
             ></PostPreview>
           </Typography>
-        </CardContent>
-        <CardActions disableSpacing>
           <BootstrapTooltip title={`${blogPost.views} views`}>
             <IconButton aria-label="share">
               <VisibilityIcon />
@@ -136,7 +134,7 @@ export default function PostCard({ blogPost }: props) {
                 color="text.secondary"
                 component="div"
               >
-                {blogPost.votes}
+                {blogPost.voteCount}
               </Typography>
             </IconButton>
           </BootstrapTooltip>
@@ -154,7 +152,8 @@ export default function PostCard({ blogPost }: props) {
               </Typography>
             </IconButton>
           </BootstrapTooltip>
-        </CardActions>
+        </CardContent>
+        <CardActions disableSpacing></CardActions>
       </Box>
     </>
   );

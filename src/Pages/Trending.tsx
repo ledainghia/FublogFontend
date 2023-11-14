@@ -42,8 +42,9 @@ export default function Trending() {
   useEffect(() => {
     const fecthData = async () => {
       try {
-        const res = await getAllBlog({ page: page, size: 10000 });
-        const allBlogsPost: blog[] = res.data.data.dtoList;
+        const res = await getAllBlog();
+        console.log(res);
+        const allBlogsPost: blog[] = res.data.data.list;
         const blogPostCount: number = res.data.data.elementCount;
 
         if (allBlogsPost.length > 0 && res.status === 200) {
@@ -170,7 +171,7 @@ export default function Trending() {
                               style={{
                                 display: "flex",
                                 flexDirection: "row",
-                                height: 195,
+                                height: 150,
                               }}
                               key={post.postId}
                             >

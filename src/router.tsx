@@ -15,6 +15,7 @@ import Profile from "./Pages/Profile";
 import MyProfile from "./Pages/MyProfile";
 import AccountSettings from "./Pages/MyProfile/AccountSettings";
 import Wall from "./Pages/MyProfile/Wall";
+import BlogPosts from "./components/TestGrap";
 
 export const Loader = (Component: ComponentType<any>) => (props: any) =>
   (
@@ -103,12 +104,16 @@ const routes: RouteObject[] = [
     element: <SidebarLayout />,
     children: [
       {
+        path: "",
+        element: <Navigate to={"/test"} />,
+      },
+      {
         path: "home",
         element: <HomePage />,
       },
       {
         path: "testing",
-        element: <AboutProject />,
+        element: <BlogPosts />,
       },
       {
         path: "newest",

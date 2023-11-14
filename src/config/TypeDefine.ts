@@ -17,6 +17,7 @@ export interface blog {
   user: userLogin;
   blogPostCount: number;
   commentCount: number;
+  voteCount: number;
 }
 
 export interface tagList {

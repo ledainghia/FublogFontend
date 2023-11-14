@@ -2,12 +2,30 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { blog } from "../config/TypeDefine";
-import { Card, Container, Grid } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Container,
+  Divider,
+  Grid,
+  IconButton,
+  Paper,
+  Stack,
+  TextareaAutosize,
+  Typography,
+} from "@mui/material";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import EditorRend from "../components/ckEditorView";
 import "../assets/css/ckeditor.css";
 import TableOfContents from "../components/TableOfContents";
 import tableOfContentsReplace from "../tools/tableOfContentsReplace";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
+
 export default function SingleBlog() {
   const { id } = useParams<{ id: string }>();
   const [post, setPost] = useState<blog | null>(null);
@@ -49,12 +67,53 @@ export default function SingleBlog() {
 
   const [contentWithAnchors, setContentWithAnchors] = useState<string>("");
 
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     const stack = document.getElementById("sticky-stack");
+  //     if (stack) {
+  //       if (window.pageYOffset > stack.offsetTop) {
+  //         stack.style.position = "fixed";
+  //         stack.style.top = "80px";
+  //       } else {
+  //         stack.style.position = "static";
+  //       }
+  //     }
+  //   };
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => {
+  //     window.removeEventListener("scroll", handleScroll);
+  //   };
+  // }, []);
+
   return (
     <>
-      <Container maxWidth="lg">
+      <Container maxWidth="lg" sx={{ mt: 3 }}>
         <Card>
-          <Grid container spacing={3} paddingX={3}>
-            <Grid item xs={12}>
+          <Grid container spacing={3} paddingX={3} position="sticky" top={0}>
+            <Grid item xs={1} position="sticky" top={0}>
+              <Box position="sticky" top={0}>
+                <Stack
+                  id="sticky-stack"
+                  style={{ paddingTop: 100 }}
+                  direction="column"
+                  spacing={2}
+                >
+                  <IconButton color="secondary">
+                    <ArrowUpwardIcon />
+                  </IconButton>
+                  <Typography variant="h3" sx={{ textAlign: "center" }}>
+                    3
+                  </Typography>
+                  <IconButton color="secondary">
+                    <ArrowDownwardIcon />
+                  </IconButton>
+                  <IconButton color="secondary">
+                    <BookmarkIcon />
+                  </IconButton>
+                </Stack>
+              </Box>
+            </Grid>
+            <Grid item xs={11}>
               <div className="post post-single">
                 <div className="post-header">
                   <h1 className="title mt-0 mb-3">{post?.title}</h1>
@@ -85,11 +144,7 @@ export default function SingleBlog() {
                   </ul>
                 </div>
                 <div className="featured-image">
-                  <img
-                    src={post?.picture}
-                    style={{ width: "100%" }}
-                    alt="post-title"
-                  />
+                  <img src={post?.picture} alt="post-title" />
                 </div>
               </div>
               <div className="preview_content">
@@ -111,6 +166,140 @@ export default function SingleBlog() {
               </div>
             </Grid> */}
           </Grid>
+        </Card>
+
+        <Card sx={{ mt: 3 }}>
+          <CardContent>
+            <Typography variant="h3">Comment</Typography>
+            <Stack direction={"column"}>
+              <Card sx={{ p: 2, boxShadow: "none" }}>
+                <Stack direction={"row"} spacing={4}>
+                  <Avatar
+                    sx={{ height: 60, width: 60 }}
+                    alt="PIC"
+                    variant="rounded"
+                  ></Avatar>
+                  <Stack direction={"column"}>
+                    <Typography variant="h4">Le Dai Nghia</Typography>
+                    <Typography variant="caption">
+                      Jan 08, 2021 14:41 pm
+                    </Typography>
+                    <Typography sx={{ mt: 1 }} variant="body1">
+                      Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                      Quidem doloribus maxime placeat maiores soluta modi
+                      dolores perspiciatis vero amet inventore pariatur illo
+                      unde quo similique, eveniet ea accusantium velit
+                      molestias.
+                    </Typography>
+
+                    <Button sx={{ width: 40, mt: 1 }} variant="contained">
+                      Reply
+                    </Button>
+                  </Stack>
+                </Stack>
+              </Card>
+            </Stack>
+            <Divider></Divider>
+            <Stack direction={"column"} pl={10}>
+              <Card sx={{ p: 2, boxShadow: "none" }}>
+                <Stack direction={"row"} spacing={4}>
+                  <Avatar
+                    sx={{ height: 60, width: 60 }}
+                    alt="PIC"
+                    variant="rounded"
+                  ></Avatar>
+                  <Stack direction={"column"}>
+                    <Typography variant="h4">Le Dai Nghia</Typography>
+                    <Typography variant="caption">
+                      Jan 08, 2021 14:41 pm
+                    </Typography>
+                    <Typography sx={{ mt: 1 }} variant="body1">
+                      Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                      Quidem doloribus maxime placeat maiores soluta modi
+                      dolores perspiciatis vero amet inventore pariatur illo
+                      unde quo similique, eveniet ea accusantium velit
+                      molestias.
+                    </Typography>
+
+                    <Button sx={{ width: 40, mt: 1 }} variant="contained">
+                      Reply
+                    </Button>
+                  </Stack>
+                </Stack>
+              </Card>
+            </Stack>
+            <Divider></Divider>
+            <Stack direction={"column"} pl={10}>
+              <Card sx={{ p: 2, boxShadow: "none" }}>
+                <Stack direction={"row"} spacing={4}>
+                  <Avatar
+                    sx={{ height: 60, width: 60 }}
+                    alt="PIC"
+                    variant="rounded"
+                  ></Avatar>
+                  <Stack direction={"column"}>
+                    <Typography variant="h4">Le Dai Nghia</Typography>
+                    <Typography variant="caption">
+                      Jan 08, 2021 14:41 pm
+                    </Typography>
+                    <Typography sx={{ mt: 1 }} variant="body1">
+                      Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                      Quidem doloribus maxime placeat maiores soluta modi
+                      dolores perspiciatis vero amet inventore pariatur illo
+                      unde quo similique, eveniet ea accusantium velit
+                      molestias.
+                    </Typography>
+
+                    <Button sx={{ width: 40, mt: 1 }} variant="contained">
+                      Reply
+                    </Button>
+                  </Stack>
+                </Stack>
+              </Card>
+            </Stack>
+            <Divider></Divider>
+            <Stack direction={"column"}>
+              <Card sx={{ p: 2, boxShadow: "none" }}>
+                <Stack direction={"row"} spacing={4}>
+                  <Avatar
+                    sx={{ height: 60, width: 60 }}
+                    alt="PIC"
+                    variant="rounded"
+                  ></Avatar>
+                  <Stack direction={"column"}>
+                    <Typography variant="h4">Le Dai Nghia</Typography>
+                    <Typography variant="caption">
+                      Jan 08, 2021 14:41 pm
+                    </Typography>
+                    <Typography sx={{ mt: 1 }} variant="body1">
+                      Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                      Quidem doloribus maxime placeat maiores soluta modi
+                      dolores perspiciatis vero amet inventore pariatur illo
+                      unde quo similique, eveniet ea accusantium velit
+                      molestias.
+                    </Typography>
+
+                    <Button sx={{ width: 40, mt: 1 }} variant="contained">
+                      Reply
+                    </Button>
+                  </Stack>
+                </Stack>
+              </Card>
+            </Stack>
+          </CardContent>
+        </Card>
+        <Card sx={{ mt: 3 }}>
+          <CardContent>
+            <Typography variant="h3">Leave Comment</Typography>
+            <TextareaAutosize
+              aria-label="empty textarea"
+              placeholder="Type your comment here..."
+              style={{ width: "100%", marginTop: 10 }}
+            />
+            <Button sx={{ mt: 2 }} variant="contained">
+              Submit
+            </Button>
+          </CardContent>
         </Card>
       </Container>
     </>

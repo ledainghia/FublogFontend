@@ -28,6 +28,7 @@ import { checkUser } from "../../../tools/CheckUser";
 import { useTabNavStore } from "../../../config/ZustandStorage";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import HeaderNotifications from "./Buttons/Notifications";
+import { getUserInfoFromLocal } from "../../../tools/getUserInfoFromLocal";
 const HeaderWrapper = styled(Box)(
   ({ theme }) => `
         height: ${theme.header.height};
@@ -65,17 +66,67 @@ function a11yProps(index: number) {
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
+
+function samePageLinkNavigation(
+  event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+) {
+  if (
+    event.defaultPrevented ||
+    event.button !== 0 || // ignore everything but left-click
+    event.metaKey ||
+    event.ctrlKey ||
+    event.altKey ||
+    event.shiftKey
+  ) {
+    return false;
+  }
+  return true;
+}
+
+interface LinkTabProps {
+  label?: string;
+  href?: string;
+}
+
+function LinkTab(props: LinkTabProps) {
+  const navigate = useNavigate();
+  return (
+    <Tab
+      component="a"
+      onClick={(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+        // Routing libraries handle this, you can remove the onClick handle when using them.
+        if (samePageLinkNavigation(event)) {
+          event.preventDefault();
+          navigate(props.href!);
+        }
+      }}
+      {...props}
+    />
+  );
+}
+
 function Header() {
   const { sidebarToggle, toggleSidebar } = useContext(SidebarContext);
   const theme = useTheme();
   const { tabIndex, setTabIndex } = useTabNavStore();
+  const [value, setValue] = useState(0);
   const naviagate = useNavigate();
   const check = checkUser();
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setTabIndex(newValue);
+    // event.type can be equal to focus with selectionFollowsFocus.
+    if (
+      event.type !== "click" ||
+      (event.type === "click" &&
+        samePageLinkNavigation(
+          event as React.MouseEvent<HTMLAnchorElement, MouseEvent>
+        ))
+    ) {
+      setValue(newValue);
+    }
   };
   const location = useLocation();
   console.log(location.pathname);
+  const userRole: string[] | undefined = getUserInfoFromLocal()?.roles;
 
   return (
     <>
@@ -112,42 +163,15 @@ function Header() {
             variant="scrollable"
             scrollButtons="auto"
           >
-            <Tab
-              label="Content creater"
-              {...a11yProps(0)}
-              onClick={() => naviagate("/test")}
-            />
-            <Tab
-              label="newest"
-              {...a11yProps(1)}
-              onClick={() => naviagate("/test")}
-            />
-            <Tab
-              label="trending"
-              {...a11yProps(2)}
-              onClick={() => naviagate("/test")}
-            />
-            <Tab
-              label="Following"
-              {...a11yProps(3)}
-              onClick={() => naviagate("/test")}
-            />
-            <Tab
-              label="Bookmark"
-              {...a11yProps(4)}
-              onClick={() => naviagate("/test")}
-            />
-            <Tab
-              label="Write Blog"
-              {...a11yProps(5)}
-              onClick={() => naviagate("/test")}
-            />
-            <Tab
-              label="My profile"
-              {...a11yProps(6)}
-              onClick={() => naviagate("/myprofile")}
-            />
+            <LinkTab label="Content creator" href="/asdas" />
+            <LinkTab label="blogs" />
+            <LinkTab label="Write Blog" href="writeblog" />
+            {userRole && userRole[0] === "LECTURE" && (
+              <Tab label="Approving posts" {...a11yProps(4)} />
+            )}
+            <LinkTab label="My profile" />
           </Tabs>
+
           {/* <HeaderMenu /> */}
         </Stack>
         <Box display="flex" alignItems="center">

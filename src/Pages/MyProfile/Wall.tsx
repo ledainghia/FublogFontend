@@ -20,6 +20,8 @@ import {
   tooltipClasses,
   CardHeader,
   IconButton,
+  CardContent,
+  AvatarGroup,
 } from "@mui/material";
 import { useState, useEffect, useCallback, ChangeEvent } from "react";
 import { useParams } from "react-router";
@@ -38,6 +40,7 @@ import { userLogin, blog } from "../../config/TypeDefine";
 import { extractTextFromHtml } from "../../tools/extractTextFromHtml";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import PostCardMyProfile from "../../components/PostCardMyProfile";
+import ModeEditOutlineTwoToneIcon from "@mui/icons-material/ModeEditOutlineTwoTone";
 const SearchInputWrapper = styled(TextField)(
   ({ theme }) => `
         background: ${theme.colors.alpha.white[100]};
@@ -203,26 +206,174 @@ export default function Wall() {
         spacing={4}
         p={2}
       >
+        <Grid item xs={12} md={4} spacing={10}>
+          <Card>
+            <CardHeader
+              title="Profile Information"
+              action={
+                <IconButton aria-label="settings">
+                  <ModeEditOutlineTwoToneIcon />
+                </IconButton>
+              }
+            ></CardHeader>
+            <CardContent>
+              <Stack spacing={2}>
+                <Stack direction={"row"} spacing={2}>
+                  <Avatar variant="rounded" alt="user"></Avatar>
+                  <Stack>
+                    <Typography variant="h5" component="div">
+                      {user?.fullName}
+                    </Typography>
+                    <Typography variant="body2" component="div">
+                      {user?.email}
+                    </Typography>
+                  </Stack>
+                </Stack>
+                <Typography variant="body2" component="div">
+                  <strong>Role</strong>: {user?.role}
+                </Typography>
+                <Typography variant="body2" component="div">
+                  <strong>Email</strong>: {user?.email}
+                </Typography>
+                <Typography variant="body2" component="div">
+                  <strong>Point</strong>: {user?.point} pt
+                </Typography>
+                <Typography variant="body2" component="div">
+                  <strong>View</strong>: {countViewOfBlog}
+                </Typography>
+              </Stack>
+            </CardContent>
+          </Card>
+          <Card sx={{ marginTop: 4 }}>
+            <CardHeader title="Followers"></CardHeader>
+            <CardContent>
+              <Stack spacing={1}>
+                <Stack direction={"row"} spacing={2}>
+                  <Avatar variant="rounded" alt="user"></Avatar>
+                  <Stack>
+                    <Typography variant="h5" component="div">
+                      {user?.fullName}
+                    </Typography>
+                    <Typography variant="body2" component="div">
+                      {user?.email}
+                    </Typography>
+                  </Stack>
+                  <Button variant="outlined">Unfollow </Button>
+                </Stack>
+                <Stack direction={"row"} spacing={2}>
+                  <Avatar variant="rounded" alt="user"></Avatar>
+                  <Stack>
+                    <Typography variant="h5" component="div">
+                      {user?.fullName}
+                    </Typography>
+                    <Typography variant="body2" component="div">
+                      {user?.email}
+                    </Typography>
+                  </Stack>
+                  <Button variant="outlined">Unfollow </Button>
+                </Stack>
+                <Stack direction={"row"} spacing={2}>
+                  <Avatar variant="rounded" alt="user"></Avatar>
+                  <Stack>
+                    <Typography variant="h5" component="div">
+                      {user?.fullName}
+                    </Typography>
+                    <Typography variant="body2" component="div">
+                      {user?.email}
+                    </Typography>
+                  </Stack>
+                  <Button variant="outlined">Unfolow </Button>
+                </Stack>
+                <Stack direction={"row"} spacing={2}>
+                  <Avatar variant="rounded" alt="user"></Avatar>
+                  <Stack>
+                    <Typography variant="h5" component="div">
+                      {user?.fullName}
+                    </Typography>
+                    <Typography variant="body2" component="div">
+                      {user?.email}
+                    </Typography>
+                  </Stack>
+                  <Button variant="outlined">Follow</Button>
+                </Stack>
+              </Stack>
+            </CardContent>
+          </Card>
+          <Card sx={{ marginTop: 4 }}>
+            <CardHeader title="Following"></CardHeader>
+            <CardContent>
+              <Stack spacing={2}>
+                <Stack direction={"row"} spacing={2}>
+                  <Avatar variant="rounded" alt="user"></Avatar>
+                  <Stack>
+                    <Typography variant="h5" component="div">
+                      {user?.fullName}
+                    </Typography>
+                    <Typography variant="body2" component="div">
+                      {user?.email}
+                    </Typography>
+                  </Stack>
+                </Stack>
+                <Divider></Divider>
+                <Stack direction={"row"} spacing={2}>
+                  <Avatar variant="rounded" alt="user"></Avatar>
+                  <Stack>
+                    <Typography variant="h5" component="div">
+                      {user?.fullName}
+                    </Typography>
+                    <Typography variant="body2" component="div">
+                      {user?.email}
+                    </Typography>
+                  </Stack>
+                </Stack>
+                <Divider></Divider>
+                <Stack direction={"row"} spacing={2}>
+                  <Avatar variant="rounded" alt="user"></Avatar>
+                  <Stack>
+                    <Typography variant="h5" component="div">
+                      {user?.fullName}
+                    </Typography>
+                    <Typography variant="body2" component="div">
+                      {user?.email}
+                    </Typography>
+                  </Stack>
+                </Stack>
+                <Divider></Divider>
+                <Stack direction={"row"} spacing={2}>
+                  <Avatar variant="rounded" alt="user"></Avatar>
+                  <Stack>
+                    <Typography variant="h5" component="div">
+                      {user?.fullName}
+                    </Typography>
+                    <Typography variant="body2" component="div">
+                      {user?.email}
+                    </Typography>
+                  </Stack>
+                </Stack>
+              </Stack>
+            </CardContent>
+          </Card>
+        </Grid>
+
         <Grid item xs={12} md={8}>
           <Stack direction={{ xs: "column" }} display={{ xs: "flex" }}>
-            <SearchInputWrapper
-              value={searchValue}
-              autoFocus={true}
-              onChange={handleSearchChange}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchTwoToneIcon />
-                  </InputAdornment>
-                ),
-              }}
-              placeholder="Search terms here..."
-              fullWidth
-              label="Search"
-            />
-            <Card
-              sx={{ display: "flex", flexDirection: "column", marginTop: 5 }}
-            >
+            <Card sx={{ display: "flex", flexDirection: "column" }}>
+              <CardHeader title="Your blog posts"></CardHeader>
+              <SearchInputWrapper
+                value={searchValue}
+                autoFocus={true}
+                sx={{ margin: 2 }}
+                onChange={handleSearchChange}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SearchTwoToneIcon />
+                    </InputAdornment>
+                  ),
+                }}
+                placeholder="Search terms here..."
+                label="Search"
+              />
               {blogPost &&
                 blogPost
                   .filter((post: blog) =>

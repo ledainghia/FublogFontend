@@ -7,6 +7,8 @@ import {
   InputAdornment,
   Pagination,
   Stack,
+  Tab,
+  Tabs,
   TextField,
   Typography,
   styled,
@@ -24,6 +26,13 @@ import { set } from "nprogress";
 import SearchTwoToneIcon from "@mui/icons-material/SearchTwoTone";
 import Loading from "../components/Loading";
 
+function a11yProps(index: number) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
+
 const SearchInputWrapper = styled(TextField)(
   ({ theme }) => `
     background: ${theme.colors.alpha.white[100]};
@@ -40,11 +49,12 @@ export default function HomePage() {
   const [totalPages, setTotalPages] = useState(1);
   let limitPostPerPage: number = 10;
   const [update, setUpdate] = useState(false);
+  const [value, setValue] = useState(0);
   useEffect(() => {
     const fecthData = async () => {
       try {
-        const res = await getAllBlog({ page: page, size: 10000 });
-        const allBlogsPost: blog[] = res.data.data.dtoList;
+        const res = await getAllBlog();
+        const allBlogsPost: blog[] = res.data.data.list;
         const blogPostCount: number = res.data.data.elementCount;
 
         if (allBlogsPost.length > 0 && res.status === 200) {
@@ -59,9 +69,16 @@ export default function HomePage() {
             allBlogPosts.content = extractTextFromHtml(allBlogPosts.content);
             return allBlogPosts;
           });
-
-          setPosts(blogPosts);
-          setTotalPages(Math.ceil(blogPostCount / limitPostPerPage));
+          if (value === 0) {
+            setPosts(blogPosts);
+            setTotalPages(Math.ceil(blogPostCount / limitPostPerPage));
+          } else {
+            const blogPostsSort = blogPosts.sort(
+              (a: blog, b: blog) => b.views - a.views
+            );
+            setPosts(blogPostsSort);
+            setTotalPages(Math.ceil(blogPostCount / limitPostPerPage));
+          }
         }
         console.log(res);
       } catch (error) {
@@ -79,6 +96,7 @@ export default function HomePage() {
     setPage(value);
   };
   const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     const fecthData = async () => {
       try {
@@ -111,6 +129,12 @@ export default function HomePage() {
     [setSearchValue, setPage]
   );
 
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    event.preventDefault();
+    console.log("newValue", newValue);
+    setValue(newValue);
+    setUpdate(!update);
+  };
   return (
     <>
       <Helmet>
@@ -128,7 +152,28 @@ export default function HomePage() {
           <Grid item xs={12}>
             <Stack direction={{ xs: "column" }} display={{ xs: "flex" }}>
               <CardHeader
-                title={<Typography variant="h3">Newest</Typography>}
+                title={
+                  <Tabs
+                    value={value}
+                    onChange={handleChange}
+                    variant="scrollable"
+                    scrollButtons="auto"
+                  >
+                    <Tab
+                      sx={{ fontSize: 15 }}
+                      wrapped
+                      label="NEWEST"
+                      {...a11yProps(0)}
+                    />
+
+                    <Tab
+                      sx={{ fontSize: 15 }}
+                      wrapped
+                      label="trending"
+                      {...a11yProps(1)}
+                    />
+                  </Tabs>
+                }
                 action={
                   <>
                     <SearchInputWrapper
@@ -170,7 +215,7 @@ export default function HomePage() {
                               style={{
                                 display: "flex",
                                 flexDirection: "row",
-                                height: 195,
+                                height: 150,
                               }}
                             >
                               <PostCard key={post.postId} blogPost={post} />

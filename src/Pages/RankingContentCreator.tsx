@@ -21,6 +21,7 @@ import { getAllUserByPoint } from "../APICall/apiConfig";
 import "../assets/css/text-effect.css";
 import Loading from "../components/Loading";
 import { userLogin } from "../config/TypeDefine";
+import { set } from "nprogress";
 const SearchInputWrapper = styled(TextField)(
   ({ theme }) => `
       background: ${theme.colors.alpha.white[100]};
@@ -44,7 +45,7 @@ export default function RankingContentCreator() {
       try {
         const res = await getAllUserByPoint();
         console.log(res.data);
-        const allUser: userLogin[] = res.data.data.dtoList;
+        const allUser: userLogin[] = res.data.data.list;
         if (allUser.length > 0 && res.status === 200) {
           setUser(allUser.sort((a, b) => b.point - a.point));
         }
@@ -62,13 +63,18 @@ export default function RankingContentCreator() {
       );
       setDisplayedUsers(filteredUsers);
     } else {
-      setDisplayedUsers(showAll ? user : user?.slice(0, 10));
+      setDisplayedUsers(showAll ? user : user?.slice(0, 5));
     }
   }, [searchQuery, user, showAll]);
 
   const loadMore = () => {
     setDisplayedUsers(user);
     setShowAll(true);
+  };
+
+  const hideMore = () => {
+    setDisplayedUsers(user?.slice(0, 5));
+    setShowAll(false);
   };
 
   return (
@@ -79,9 +85,7 @@ export default function RankingContentCreator() {
             <Card sx={{ width: "100%" }}>
               <CardHeader
                 sx={{
-                  background:
-                    "linear-gradient(135deg, rgba(254,182,117,1) 0%, rgba(255,187,121,1) 100%)",
-                  color: "white",
+                  color: "black",
                 }}
                 title={
                   <>
@@ -90,23 +94,12 @@ export default function RankingContentCreator() {
                     </Typography>
                   </>
                 }
-                subheader={
-                  <>
-                    <Typography mt={3} variant="h6" color={"white"}>
-                      Are you a content creator who thrives on innovation,
-                      creativity, and the art of storytelling? Have you spent
-                      countless hours crafting compelling narratives, capturing
-                      breathtaking visuals, or engaging your audience with
-                      thought-provoking content? If so, it's time to shine and
-                      be recognized for your exceptional contributions to the
-                      digital world!
-                    </Typography>
-                  </>
-                }
               ></CardHeader>
               {user && user.length > 0 && (
                 <CardContent
-                  sx={{ backgroundImage: `url("${backgroundLeaderBoard}")` }}
+                  sx={{
+                    backgroundImage: `url("https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")`,
+                  }}
                 >
                   <Grid
                     container
@@ -410,6 +403,23 @@ export default function RankingContentCreator() {
               </Grid>
             </CardContent>
           )}
+        {user && showAll && (
+          <CardContent>
+            <Grid container>
+              <Grid
+                item
+                xs={12}
+                md={12}
+                lg={12}
+                sx={{ display: "flex", justifyContent: "center" }}
+              >
+                <Button variant="contained" onClick={hideMore}>
+                  Hide
+                </Button>
+              </Grid>
+            </Grid>
+          </CardContent>
+        )}
       </Container>
     </>
   );

@@ -123,10 +123,8 @@ export const signup = (data: any) => {
   return axios.post(BASE_URL + "/api/v1/auth/signup", data);
 };
 
-export const getAllBlog = ({ page, size }: { page: number; size: number }) => {
-  return axios.get(
-    BASE_URL + `/api/v1/auth/blogPosts/getAllBlog/${page}/${size}`
-  );
+export const getAllBlog = () => {
+  return axios.get(BASE_URL + `/api/v1/auth/blogPosts/getAllBlog`);
 };
 
 export const getUserCurrentInfo = () => {
