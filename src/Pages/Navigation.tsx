@@ -3,9 +3,9 @@ import React, { ComponentType, Suspense, lazy } from "react";
 import { useTabNavStore } from "../config/ZustandStorage";
 
 import SuspenseLoader from "../components/SuspenseLoader";
-import RankingContentCreator from "./RankingContentCreator";
-import MyProfile from "./MyProfile";
 import AprovingPosts from "./AprovingPosts";
+import Dashboard from "./Dashboard";
+import RankingContentCreator from "./RankingContentCreator";
 
 export const Loader = (Component: ComponentType<any>) => (props: any) =>
   (
@@ -14,7 +14,7 @@ export const Loader = (Component: ComponentType<any>) => (props: any) =>
     </Suspense>
   );
 const HomePage = Loader(lazy(() => import("./HomePage")));
-const Trending = Loader(lazy(() => import("./Trending")));
+
 const WriteBlog = Loader(lazy(() => import("./WriteBlog")));
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -53,17 +53,18 @@ export default function Navigation() {
       <CustomTabPanel value={tabIndex} index={1}>
         <HomePage />
       </CustomTabPanel>
+
       <CustomTabPanel value={tabIndex} index={2}>
-        <Trending />
-      </CustomTabPanel>
-      <CustomTabPanel value={tabIndex} index={5}>
         <WriteBlog />
       </CustomTabPanel>
-      <CustomTabPanel value={tabIndex} index={5}>
+      <CustomTabPanel value={tabIndex} index={3}>
         <AprovingPosts />
       </CustomTabPanel>
-      {/* <CustomTabPanel value={tabIndex} index={6}>
-        <MyProfile />
+      <CustomTabPanel value={tabIndex} index={4}>
+        <Dashboard />
+      </CustomTabPanel>
+      {/* <CustomTabPanel value={tabIndex} index={4}>
+        <MyProfile children={<AccountSettings />} />
       </CustomTabPanel> */}
     </>
   );

@@ -19,22 +19,19 @@ import {
 import LoginTwoToneIcon from "@mui/icons-material/LoginTwoTone";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import axios from "axios";
+import { signInWithPopup } from "firebase/auth";
+import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 import {
   useToastErrorStore,
   useToastSuccessStore,
-  useToastWarningStore,
   useUserStore,
   userLogin,
 } from "../../config/ZustandStorage";
-import axios from "axios";
-import { jwtDecode } from "jwt-decode";
-import { ToastContainer, toast } from "react-toastify";
-import { set } from "nprogress";
-import { auth, provider } from "../../config/firebase";
-import { signInWithPopup } from "firebase/auth";
 import axiosInstance from "../../config/axiosConfig";
-import { add } from "date-fns";
+import { auth, provider } from "../../config/firebase";
 interface userGoogle {
   name: string;
   email: string;
@@ -44,10 +41,9 @@ interface userGoogle {
 export default function LoginComponent() {
   const [showPassword, setShowPassword] = React.useState(false);
   const [error, setError] = useState(false);
-  const { toastError, addToastError, shiftToastError } = useToastErrorStore();
+  const { addToastError } = useToastErrorStore();
 
-  const { toastSuccess, addToastSuccess, shiftToastSuccess } =
-    useToastSuccessStore();
+  const { addToastSuccess } = useToastSuccessStore();
   //   const { toastWarning, addToastWarning, shiftToastWarning } =
   //     useToastWarningStore();
   const navigate = useNavigate();
@@ -140,7 +136,7 @@ export default function LoginComponent() {
                   "refreshToken",
                   response.data.refreshToken
                 );
-                const user: userLogin = jwtDecode(response.data.refreshToken);
+
                 localStorage.setItem("user", JSON.stringify(userL));
                 navigate("/");
                 addToastSuccess("Login success!");

@@ -1,34 +1,31 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 
+import CloseTwoToneIcon from "@mui/icons-material/CloseTwoTone";
+import MenuTwoToneIcon from "@mui/icons-material/MenuTwoTone";
 import {
   Box,
-  alpha,
-  Stack,
-  lighten,
-  Divider,
+  Button,
   IconButton,
+  Stack,
+  Tab,
+  Tabs,
   Tooltip,
+  alpha,
+  lighten,
   styled,
   useTheme,
-  Tabs,
-  Tab,
-  Button,
 } from "@mui/material";
-import BottomNavigation from "@mui/material/BottomNavigation";
-import MenuTwoToneIcon from "@mui/icons-material/MenuTwoTone";
-import { SidebarContext } from "../../../contexts/SidebarContext";
-import CloseTwoToneIcon from "@mui/icons-material/CloseTwoTone";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Fade } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
-import HeaderButtons from "./Buttons";
-import HeaderUserbox from "./Userbox";
-import HeaderMenu from "./Menu";
 import logo from "../../../assets/images/logo-color.svg";
-import { checkUser } from "../../../tools/CheckUser";
 import { useTabNavStore } from "../../../config/ZustandStorage";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import HeaderNotifications from "./Buttons/Notifications";
+import { SidebarContext } from "../../../contexts/SidebarContext";
+import { checkUser } from "../../../tools/CheckUser";
 import { getUserInfoFromLocal } from "../../../tools/getUserInfoFromLocal";
+import HeaderButtons from "./Buttons";
+import HeaderNotifications from "./Buttons/Notifications";
+import HeaderUserbox from "./Userbox";
 const HeaderWrapper = styled(Box)(
   ({ theme }) => `
         height: ${theme.header.height};
@@ -66,63 +63,15 @@ function a11yProps(index: number) {
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
-
-function samePageLinkNavigation(
-  event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
-) {
-  if (
-    event.defaultPrevented ||
-    event.button !== 0 || // ignore everything but left-click
-    event.metaKey ||
-    event.ctrlKey ||
-    event.altKey ||
-    event.shiftKey
-  ) {
-    return false;
-  }
-  return true;
-}
-
-interface LinkTabProps {
-  label?: string;
-  href?: string;
-}
-
-function LinkTab(props: LinkTabProps) {
-  const navigate = useNavigate();
-  return (
-    <Tab
-      component="a"
-      onClick={(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-        // Routing libraries handle this, you can remove the onClick handle when using them.
-        if (samePageLinkNavigation(event)) {
-          event.preventDefault();
-          navigate(props.href!);
-        }
-      }}
-      {...props}
-    />
-  );
-}
-
 function Header() {
   const { sidebarToggle, toggleSidebar } = useContext(SidebarContext);
   const theme = useTheme();
   const { tabIndex, setTabIndex } = useTabNavStore();
-  const [value, setValue] = useState(0);
   const naviagate = useNavigate();
   const check = checkUser();
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    // event.type can be equal to focus with selectionFollowsFocus.
-    if (
-      event.type !== "click" ||
-      (event.type === "click" &&
-        samePageLinkNavigation(
-          event as React.MouseEvent<HTMLAnchorElement, MouseEvent>
-        ))
-    ) {
-      setValue(newValue);
-    }
+    event.preventDefault();
+    setTabIndex(newValue);
   };
   const location = useLocation();
   console.log(location.pathname);
@@ -163,13 +112,41 @@ function Header() {
             variant="scrollable"
             scrollButtons="auto"
           >
-            <LinkTab label="Content creator" href="/asdas" />
-            <LinkTab label="blogs" />
-            <LinkTab label="Write Blog" href="writeblog" />
-            {userRole && userRole[0] === "LECTURE" && (
-              <Tab label="Approving posts" {...a11yProps(4)} />
+            <Tab
+              label="Content creator"
+              {...a11yProps(0)}
+              onClick={() => naviagate("/")}
+            />
+            <Tab
+              label="blogs"
+              {...a11yProps(1)}
+              onClick={() => naviagate("/")}
+            />
+            <Tab
+              label="Write Blog"
+              {...a11yProps(2)}
+              onClick={() => naviagate("/")}
+            />
+            {userRole &&
+              (userRole[0] === "LECTURE" || userRole[0] === "ADMIN") && (
+                <Tab
+                  label="Approving posts"
+                  {...a11yProps(3)}
+                  onClick={() => naviagate("/")}
+                />
+              )}
+            {userRole && userRole[0] === "ADMIN" && (
+              <Tab
+                label="Admin"
+                {...a11yProps(4)}
+                onClick={() => naviagate("/")}
+              />
             )}
-            <LinkTab label="My profile" />
+            <Tab
+              label="My profile"
+              {...a11yProps(4)}
+              onClick={() => naviagate("/myprofile")}
+            />
           </Tabs>
 
           {/* <HeaderMenu /> */}

@@ -1,42 +1,30 @@
-import React, {
-  ChangeEvent,
-  Suspense,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import FlagTwoToneIcon from "@mui/icons-material/FlagTwoTone";
+import PersonAddAltTwoToneIcon from "@mui/icons-material/PersonAddAltTwoTone";
+import SearchTwoToneIcon from "@mui/icons-material/SearchTwoTone";
+import {
+  Avatar,
+  Button,
+  Card,
+  Divider,
+  Grid,
+  InputAdornment,
+  Pagination,
+  Stack,
+  TextField,
+  Typography,
+  styled,
+} from "@mui/material";
+import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import {
   checkFollow,
   getBlogPostByAuthor,
-  getCountViewOfBlogByUser,
-  getCountPostMarkByUser,
   getUserInfor,
-  getFollowerCount,
-  getFollowingCount,
 } from "../APICall/apiConfig";
-import { userLogin, blog } from "../config/TypeDefine";
-import {
-  Grid,
-  Stack,
-  CardHeader,
-  Typography,
-  InputAdornment,
-  Card,
-  Divider,
-  Pagination,
-  TextField,
-  styled,
-  Avatar,
-  Button,
-} from "@mui/material";
 import Loading from "../components/Loading";
 import PostCard from "../components/PostCard";
-import SuspenseLoader from "../components/SuspenseLoader";
-import SearchTwoToneIcon from "@mui/icons-material/SearchTwoTone";
+import { blog, userLogin } from "../config/TypeDefine";
 import { extractTextFromHtml } from "../tools/extractTextFromHtml";
-import PersonAddAltTwoToneIcon from "@mui/icons-material/PersonAddAltTwoTone";
-import FlagTwoToneIcon from "@mui/icons-material/FlagTwoTone";
 
 const SearchInputWrapper = styled(TextField)(
   ({ theme }) => `
@@ -52,15 +40,11 @@ export default function Profile() {
     ? JSON.parse(localStorage.getItem("user") as string)
     : null;
   const [blogPost, setBlogPost] = useState<blog[]>([]);
-  const [followerCount, setFollowerCount] = useState<number | null>(null);
-  const [followingCount, setFollowingCount] = useState<number | null>(null);
+
   const { userID } = useParams<{ userID: string }>();
 
   const [totalPages, setTotalPages] = useState(1);
-  const [countViewOfBlog, setCountViewOfBlog] = useState<number>(0);
-  const [countPostMark, setCountPostMark] = useState<number>(0);
 
-  const [blogPostsCount, setBlogPostsCount] = useState<number>(0);
   const [user, setUser] = useState<userLogin | null>(null);
 
   useEffect(() => {
@@ -97,23 +81,7 @@ export default function Profile() {
       .catch((error) => {
         console.log(error);
       });
-    getCountViewOfBlogByUser(userID)
-      .then((response) => {
-        console.log("getCountViewOfBlog", response.data);
-        setCountViewOfBlog(response.data.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
 
-    getCountPostMarkByUser(userID)
-      .then((response) => {
-        console.log("getCountPostMarkByUser", response.data);
-        setCountPostMark(response.data.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
     getUserInfor(userID)
       .then((response) => {
         console.log("getUserInfor", response.data);
@@ -122,38 +90,7 @@ export default function Profile() {
       .catch((error) => {
         console.log(error);
       });
-  }, [
-    setBlogPost,
-    userID,
-
-    setTotalPages,
-    setCountViewOfBlog,
-    setCountPostMark,
-    setBlogPostsCount,
-    setUser,
-  ]);
-
-  useEffect(() => {
-    getFollowerCount(userID)
-      .then((response) => {
-        console.log("getFollowerCount", response.data.data);
-        setFollowerCount(response.data.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [setFollowerCount, userID]);
-
-  useEffect(() => {
-    getFollowingCount(userID)
-      .then((response) => {
-        console.log("getFollowerCount", response.data.data);
-        setFollowingCount(response.data.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [setFollowingCount, userID]);
+  }, [setBlogPost, userID, setTotalPages, setUser]);
 
   const [page, setPage] = useState(1);
   let limitPostPerPage: number = 10;

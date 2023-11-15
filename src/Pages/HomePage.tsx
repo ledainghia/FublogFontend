@@ -10,21 +10,24 @@ import {
   Tab,
   Tabs,
   TextField,
-  Typography,
   styled,
 } from "@mui/material";
 
 import { Helmet } from "react-helmet-async";
 
-import { ChangeEvent, Suspense, useCallback, useEffect, useState } from "react";
-import { getAllBlog, getAllBlogNotPagination } from "../APICall/apiConfig";
+import SearchTwoToneIcon from "@mui/icons-material/SearchTwoTone";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
+import {
+  getAllBlog,
+  getAllBlogNotPagination,
+  getBlogByFollow,
+  getMarkPostbyUser,
+} from "../APICall/apiConfig";
+import Loading from "../components/Loading";
 import PostCard from "../components/PostCard";
 import { blog } from "../config/TypeDefine";
 import { extractTextFromHtml } from "../tools/extractTextFromHtml";
-import SuspenseLoader from "../components/SuspenseLoader";
-import { set } from "nprogress";
-import SearchTwoToneIcon from "@mui/icons-material/SearchTwoTone";
-import Loading from "../components/Loading";
+import { getUserInfoFromLocal } from "../tools/getUserInfoFromLocal";
 
 function a11yProps(index: number) {
   return {
@@ -50,43 +53,118 @@ export default function HomePage() {
   let limitPostPerPage: number = 10;
   const [update, setUpdate] = useState(false);
   const [value, setValue] = useState(0);
-  useEffect(() => {
-    const fecthData = async () => {
-      try {
-        const res = await getAllBlog();
-        const allBlogsPost: blog[] = res.data.data.list;
-        const blogPostCount: number = res.data.data.elementCount;
 
-        if (allBlogsPost.length > 0 && res.status === 200) {
-          const blogPosts = allBlogsPost.map((allBlogPosts: blog) => {
-            let date: Date = new Date(allBlogPosts.createdDate);
-            const month = date.toLocaleString("en-vn", {
-              day: "2-digit",
-              month: "long",
-              year: "numeric",
+  useEffect(() => {
+    if (value === 0 || value === 1) {
+      const fecthData = async () => {
+        try {
+          const res = await getAllBlog();
+          console.log(res);
+          const allBlogsPost: blog[] = res.data.data.list;
+          const blogPostCount: number = res.data.data.elementCount;
+
+          if (allBlogsPost.length > 0 && res.status === 200) {
+            const blogPosts = allBlogsPost.map((allBlogPosts: blog) => {
+              let date: Date = new Date(allBlogPosts.createdDate);
+              const month = date.toLocaleString("en-vn", {
+                day: "2-digit",
+                month: "long",
+                year: "numeric",
+              });
+              allBlogPosts.createdDate = month;
+              allBlogPosts.content = extractTextFromHtml(allBlogPosts.content);
+              return allBlogPosts;
             });
-            allBlogPosts.createdDate = month;
-            allBlogPosts.content = extractTextFromHtml(allBlogPosts.content);
-            return allBlogPosts;
-          });
-          if (value === 0) {
+            if (value === 0) {
+              setPosts(blogPosts);
+              setTotalPages(Math.ceil(blogPostCount / limitPostPerPage));
+            } else {
+              const blogPostsSort = blogPosts.sort(
+                (a: blog, b: blog) => b.views - a.views
+              );
+              setPosts(blogPostsSort);
+              setTotalPages(Math.ceil(blogPostCount / limitPostPerPage));
+            }
+          }
+          console.log(res);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+
+      fecthData();
+    }
+  }, [update, value]);
+  const userID: number | undefined = getUserInfoFromLocal()?.id;
+  useEffect(() => {
+    if (value === 2 && userID) {
+      const fecthData = async () => {
+        try {
+          const res = await getBlogByFollow(userID);
+          console.log(res);
+          const allBlogsPost: blog[] = res.data.data.list;
+          const blogPostCount: number = res.data.data.elementCount;
+
+          if (allBlogsPost.length > 0 && res.status === 200) {
+            const blogPosts = allBlogsPost.map((allBlogPosts: blog) => {
+              let date: Date = new Date(allBlogPosts.createdDate);
+              const month = date.toLocaleString("en-vn", {
+                day: "2-digit",
+                month: "long",
+                year: "numeric",
+              });
+              allBlogPosts.createdDate = month;
+              allBlogPosts.content = extractTextFromHtml(allBlogPosts.content);
+              return allBlogPosts;
+            });
+
             setPosts(blogPosts);
             setTotalPages(Math.ceil(blogPostCount / limitPostPerPage));
-          } else {
-            const blogPostsSort = blogPosts.sort(
-              (a: blog, b: blog) => b.views - a.views
-            );
-            setPosts(blogPostsSort);
+          }
+          console.log(res);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+
+      fecthData();
+    }
+  }, [update, value]);
+
+  useEffect(() => {
+    if (value === 3 && userID) {
+      const fecthData = async () => {
+        try {
+          const res = await getMarkPostbyUser(userID);
+          console.log(res);
+          const allBlogsPost: blog[] = res.data.data;
+          const blogPostCount: number = res.data.data.elementCount;
+
+          if (allBlogsPost.length > 0 && res.status === 200) {
+            const blogPosts = allBlogsPost.map((allBlogPosts: blog) => {
+              let date: Date = new Date(allBlogPosts.createdDate);
+              const month = date.toLocaleString("en-vn", {
+                day: "2-digit",
+                month: "long",
+                year: "numeric",
+              });
+              allBlogPosts.createdDate = month;
+              allBlogPosts.content = extractTextFromHtml(allBlogPosts.content);
+              return allBlogPosts;
+            });
+
+            setPosts(blogPosts);
             setTotalPages(Math.ceil(blogPostCount / limitPostPerPage));
           }
+          console.log(res);
+        } catch (error) {
+          console.log(error);
         }
-        console.log(res);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fecthData();
-  }, [update]);
+      };
+
+      fecthData();
+    }
+  }, [update, value]);
 
   const handlePageChange = (
     event: React.ChangeEvent<unknown>,
@@ -132,6 +210,7 @@ export default function HomePage() {
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     event.preventDefault();
     console.log("newValue", newValue);
+    setPosts([]);
     setValue(newValue);
     setUpdate(!update);
   };
@@ -171,6 +250,18 @@ export default function HomePage() {
                       wrapped
                       label="trending"
                       {...a11yProps(1)}
+                    />
+                    <Tab
+                      sx={{ fontSize: 15 }}
+                      wrapped
+                      label="Follow"
+                      {...a11yProps(2)}
+                    />
+                    <Tab
+                      sx={{ fontSize: 15 }}
+                      wrapped
+                      label="bookmarks"
+                      {...a11yProps(3)}
                     />
                   </Tabs>
                 }

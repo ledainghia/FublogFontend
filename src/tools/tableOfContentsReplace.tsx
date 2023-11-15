@@ -1,9 +1,3 @@
-import React from "react";
-
-interface TableOfContentsProps {
-  content: string;
-}
-
 const tableOfContentsReplace = (content: string) => {
   const parseContent = (content: string) => {
     const parser = new DOMParser();

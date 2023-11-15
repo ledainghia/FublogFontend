@@ -17,6 +17,7 @@ import {
 } from "@ckeditor/ckeditor5-basic-styles";
 import { BlockQuote } from "@ckeditor/ckeditor5-block-quote";
 import { CodeBlock } from "@ckeditor/ckeditor5-code-block";
+import { TableOfContents } from "@ckeditor/ckeditor5-document-outline";
 import { Essentials } from "@ckeditor/ckeditor5-essentials";
 import { FindAndReplace } from "@ckeditor/ckeditor5-find-and-replace";
 import {
@@ -25,7 +26,7 @@ import {
   FontFamily,
   FontSize,
 } from "@ckeditor/ckeditor5-font";
-import { Heading, Title } from "@ckeditor/ckeditor5-heading";
+import { Heading } from "@ckeditor/ckeditor5-heading";
 import { Highlight } from "@ckeditor/ckeditor5-highlight";
 import { HorizontalLine } from "@ckeditor/ckeditor5-horizontal-line";
 import { HtmlEmbed } from "@ckeditor/ckeditor5-html-embed";
@@ -64,7 +65,6 @@ import {
 } from "@ckeditor/ckeditor5-table";
 import { Base64UploadAdapter } from "@ckeditor/ckeditor5-upload";
 import { WordCount } from "@ckeditor/ckeditor5-word-count";
-import { TableOfContents } from "@ckeditor/ckeditor5-document-outline";
 
 // You can read more about extending the build with additional plugins in the "Installing plugins" guide.
 // See https://ckeditor.com/docs/ckeditor5/latest/installation/plugins/installing-plugins.html for details.

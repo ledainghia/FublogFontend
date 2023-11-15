@@ -1,7 +1,8 @@
 import {
   Avatar,
   Box,
-  CardActions,
+  Button,
+  ButtonGroup,
   CardContent,
   CardMedia,
   Divider,
@@ -14,14 +15,27 @@ import {
   tooltipClasses,
 } from "@mui/material";
 
+import BookmarkAddTwoToneIcon from "@mui/icons-material/BookmarkAddTwoTone";
 import BookmarksIcon from "@mui/icons-material/Bookmarks";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+import PersonAddTwoToneIcon from "@mui/icons-material/PersonAddTwoTone";
 import ThumbsUpDownIcon from "@mui/icons-material/ThumbsUpDown";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import { blog } from "../config/TypeDefine";
-import EstimatedReadingTime from "../tools/EstimatedReadingTime";
-import PostPreview from "../tools/ContentPreview";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import {
+  checkBookmark,
+  checkFollow,
+  followAction,
+  insertBookmark,
+} from "../APICall/apiConfig";
+import { blog } from "../config/TypeDefine";
+import {
+  useToastErrorStore,
+  useToastSuccessStore,
+} from "../config/ZustandStorage";
+import PostPreview from "../tools/ContentPreview";
+import EstimatedReadingTime from "../tools/EstimatedReadingTime";
+import { getUserInfoFromLocal } from "../tools/getUserInfoFromLocal";
 const BootstrapTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -38,6 +52,70 @@ type props = {
 };
 
 export default function PostCard({ blogPost }: props) {
+  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [isFollowed, setIsFollowed] = useState(false);
+  const userId = getUserInfoFromLocal().id;
+  const { addToastSuccess } = useToastSuccessStore();
+  const { addToastError } = useToastErrorStore();
+  const [flag, setFlag] = useState(false);
+  useEffect(() => {
+    const fecthData = async () => {
+      try {
+        const res1 = await checkFollow(userId, blogPost.user.id.toString());
+        const res2 = await checkBookmark({
+          userId: userId,
+          postId: blogPost.postId,
+        });
+
+        if (res1.data) {
+          setIsFollowed(res1.data.data);
+        }
+
+        if (res2.data) {
+          setIsBookmarked(res2.data.data);
+        }
+        console.log(res1);
+        console.log(res2);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fecthData();
+  }, [isBookmarked, isFollowed, flag]);
+
+  async function handleInsertBookmark(): Promise<void> {
+    const userId = getUserInfoFromLocal().id;
+    const data = {
+      postId: blogPost.postId,
+      userId: userId,
+    };
+    const res = await insertBookmark(data, isBookmarked ? "unMark" : "mark");
+    if (res.status === 200) {
+      addToastSuccess(`${isBookmarked ? "unMark" : "mark"} successfully`);
+      setFlag(!flag);
+    } else {
+      addToastError(` ${isBookmarked ? "unMark" : "mark"} failed`);
+    }
+    console.log(res);
+  }
+
+  async function handleFollow(): Promise<void> {
+    const userId = getUserInfoFromLocal().id;
+
+    const res = await followAction(
+      isFollowed ? "unfollow" : "follow",
+      userId,
+      blogPost.user.id.toString()
+    );
+    if (res.status === 200) {
+      addToastSuccess(`${isFollowed ? "unfollow" : "follow"} successfully`);
+      setFlag(!flag);
+    } else {
+      addToastError(`${isFollowed ? "unfollow" : "follow"} faliure`);
+    }
+    console.log(res);
+  }
+
   return (
     <>
       <CardMedia
@@ -125,7 +203,7 @@ export default function PostCard({ blogPost }: props) {
             </IconButton>
           </BootstrapTooltip>
 
-          <BootstrapTooltip title="1,4K Views">
+          <BootstrapTooltip title={`${blogPost.voteCount} votes`}>
             <IconButton aria-label="share">
               <ThumbsUpDownIcon />
               <Typography
@@ -139,7 +217,7 @@ export default function PostCard({ blogPost }: props) {
             </IconButton>
           </BootstrapTooltip>
 
-          <BootstrapTooltip title="1,4K Views">
+          <BootstrapTooltip title={`${blogPost.bookMarkCount} bookmarks `}>
             <IconButton aria-label="share">
               <BookmarksIcon />
               <Typography
@@ -148,13 +226,39 @@ export default function PostCard({ blogPost }: props) {
                 color="text.secondary"
                 component="div"
               >
-                1,4K
+                {blogPost.bookMarkCount}
               </Typography>
             </IconButton>
           </BootstrapTooltip>
         </CardContent>
-        <CardActions disableSpacing></CardActions>
       </Box>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          float: "right",
+          marginLeft: "auto",
+          marginRight: "auto",
+        }}
+      >
+        {userId !== blogPost.user.id && (
+          <ButtonGroup orientation="vertical" sx={{}}>
+            <Button
+              startIcon={<BookmarkAddTwoToneIcon />}
+              onClick={() => handleInsertBookmark()}
+            >
+              {isBookmarked ? "Unbookmark" : "Bookmark"} this blog
+            </Button>
+            <Button
+              startIcon={<PersonAddTwoToneIcon />}
+              onClick={() => handleFollow()}
+            >
+              {isFollowed ? "Unfollow" : "Follow"} this content creator
+            </Button>
+          </ButtonGroup>
+        )}
+      </div>
     </>
   );
 }

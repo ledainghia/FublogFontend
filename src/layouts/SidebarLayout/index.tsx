@@ -1,10 +1,9 @@
-import { FC, ReactNode } from "react";
 import { Box, alpha, lighten, useTheme } from "@mui/material";
+import { FC, ReactNode } from "react";
 import { Outlet } from "react-router-dom";
 
-import Sidebar from "./Sidebar";
-import Header from "./Header";
 import AboutProject from "../../components/aboutProject";
+import Header from "./Header";
 
 interface SidebarLayoutProps {
   children?: ReactNode;

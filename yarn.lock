@@ -2686,7 +2686,7 @@
     react-transition-group "^4.4.2"
     rifm "^0.12.1"
 
-"@mui/material@^5.0.0", "@mui/material@^5.0.0 || ^5.0.0-rc.0", "@mui/material@^5.2.3", "@mui/material@5.8.2":
+"@mui/material@^5.0.0", "@mui/material@^5.0.0 || ^5.0.0-rc.0", "@mui/material@^5.2.3", "@mui/material@^5.4.1", "@mui/material@5.8.2":
   version "5.8.2"
   resolved "https://registry.npmjs.org/@mui/material/-/material-5.8.2.tgz"
   integrity sha512-w/A1KG9Czf42uTyJOiRU5U1VullOz1R3xcsBvv3BtKCCWdVP+D6v/Yb8v0tJpIixMEbjeWzWGjotQBU0nd+yNA==
@@ -2746,7 +2746,7 @@
     jss-plugin-vendor-prefixer "^10.8.2"
     prop-types "^15.8.1"
 
-"@mui/system@^5.2.3", "@mui/system@^5.8.2":
+"@mui/system@^5.2.3", "@mui/system@^5.4.1", "@mui/system@^5.8.2":
   version "5.14.16"
   resolved "https://registry.npmjs.org/@mui/system/-/system-5.14.16.tgz"
   integrity sha512-uKnPfsDqDs8bbN54TviAuoGWOmFiQLwNZ3Wvj+OBkJCzwA6QnLb/sSeCB7Pk3ilH4h4jQ0BHtbR+Xpjy9wlOuA==
@@ -2774,6 +2774,17 @@
     "@types/prop-types" "^15.7.9"
     prop-types "^15.8.1"
     react-is "^18.2.0"
+
+"@mui/x-data-grid@^6.18.1":
+  version "6.18.1"
+  resolved "https://registry.npmjs.org/@mui/x-data-grid/-/x-data-grid-6.18.1.tgz"
+  integrity sha512-ibsrWwzM2lRRWB1xs/eop63kaxlXH/qar1S1rQx3fycJiYvK6fsM72jsScBNRlRZQQwRVSGI0ZPBsOZ+/tg7Qw==
+  dependencies:
+    "@babel/runtime" "^7.23.2"
+    "@mui/utils" "^5.14.16"
+    clsx "^2.0.0"
+    prop-types "^15.8.1"
+    reselect "^4.1.8"
 
 "@mui/x-date-pickers@5.0.0-alpha.1":
   version "5.0.0-alpha.1"
@@ -4082,7 +4093,7 @@ anymatch@^3.0.3, anymatch@~3.1.2:
     normalize-path "^3.0.0"
     picomatch "^2.0.4"
 
-apexcharts@^3.18.0, apexcharts@3.35.3:
+apexcharts@^3.18.0, apexcharts@^3.35.3:
   version "3.35.3"
   resolved "https://registry.npmjs.org/apexcharts/-/apexcharts-3.35.3.tgz"
   integrity sha512-UDlxslJr3DG63I/SgoiivIu4lpP25GMaKFK8NvCHmTksTQshx4ng3oPPrYvdsBFOvD/ajPYIh/p7rNB0jq8vXg==
@@ -6603,6 +6614,7 @@ fs.realpath@^1.0.0:
   version "0.0.0"
   resolved "file:"
   dependencies:
+    "@apollo/client" "^3.8.7"
     "@ckeditor/ckeditor5-alignment" "^40.0.0"
     "@ckeditor/ckeditor5-build-classic" "^40.0.0"
     "@ckeditor/ckeditor5-code-block" "^40.0.0"
@@ -6631,6 +6643,7 @@ fs.realpath@^1.0.0:
     "@mui/lab" "5.0.0-alpha.84"
     "@mui/material" "5.8.2"
     "@mui/styles" "5.8.0"
+    "@mui/x-data-grid" "^6.18.1"
     "@types/react" "17.0.40"
     "@types/react-dom" "17.0.13"
     apexcharts "3.35.3"
@@ -6641,6 +6654,7 @@ fs.realpath@^1.0.0:
     fg-loadcss "^3.1.0"
     firebase "^10.5.2"
     fublogv4 "file:"
+    graphql "^16.8.1"
     history "5.3.0"
     jwt-decode "^4.0.0"
     mdi-material-ui "^7.7.0"
@@ -10264,7 +10278,7 @@ raw-loader@^4.0.1, raw-loader@^4.0.2:
     loader-utils "^2.0.0"
     schema-utils "^3.0.0"
 
-react-apexcharts@1.4.0:
+react-apexcharts@^1.4.0:
   version "1.4.0"
   resolved "https://registry.npmjs.org/react-apexcharts/-/react-apexcharts-1.4.0.tgz"
   integrity sha512-DrcMV4aAMrUG+n6412yzyATWEyCDWlpPBBhVbpzBC4PDeuYU6iF84SmExbck+jx5MUm4U5PM3/T307Mc3kzc9Q==
@@ -10718,6 +10732,11 @@ requires-port@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/requires-port/-/requires-port-1.0.0.tgz"
   integrity sha512-KigOCHcocU3XODJxsu8i/j8T9tzT4adHiecwORRQ0ZZFcp7ahwXuRU1m+yuO90C5ZUyGeGfocHDI14M3L3yDAQ==
+
+reselect@^4.1.8:
+  version "4.1.8"
+  resolved "https://registry.npmjs.org/reselect/-/reselect-4.1.8.tgz"
+  integrity sha512-ab9EmR80F/zQTMNeneUr4cv+jSwPJgIlvEmVwLerwrWVbpLlBuls9XHzIeTFy4cegU2NHBp3va0LKOzU5qFEYQ==
 
 resize-observer-polyfill@^1.5.1:
   version "1.5.1"

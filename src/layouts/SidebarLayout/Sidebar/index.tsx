@@ -4,19 +4,17 @@ import { SidebarContext } from "../../../contexts/SidebarContext";
 
 import {
   Box,
+  Divider,
   Drawer,
   alpha,
-  styled,
-  Divider,
-  useTheme,
-  Button,
-  lighten,
   darken,
-  Tooltip,
+  lighten,
+  styled,
+  useTheme,
 } from "@mui/material";
 
-import SidebarMenu from "./SidebarMenu";
 import Logo from "../../../components/LogoSign";
+import SidebarMenu from "./SidebarMenu";
 
 const SidebarWrapper = styled(Box)(
   ({ theme }) => `

@@ -1,6 +1,4 @@
-import { userLogin } from "../config/TypeDefine";
-
-export function getUserInfoFromLocal(): userLogin | null {
+export function getUserInfoFromLocal() {
   const userStr = localStorage.getItem("user");
   if (userStr) {
     const user = JSON.parse(userStr);

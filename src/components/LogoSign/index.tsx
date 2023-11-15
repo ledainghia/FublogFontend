@@ -1,13 +1,4 @@
-import {
-  Box,
-  Tooltip,
-  Badge,
-  TooltipProps,
-  tooltipClasses,
-  styled,
-  Container,
-  Typography,
-} from "@mui/material";
+import { Tooltip, TooltipProps, styled, tooltipClasses } from "@mui/material";
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/logo-color.svg";
 const LogoWrapper = styled(Link)(

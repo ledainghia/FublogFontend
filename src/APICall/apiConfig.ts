@@ -142,3 +142,44 @@ export const getCategory = () => {
 export const insertPost = (data: any) => {
   return axiosInstance.post("/api/v1/auth/blogPosts/insert", data);
 };
+
+export const getBlogPostByCategory = () => {
+  return axios.get(BASE_URL + "/api/v1/auth/blogPosts/getBlogPostByCategory");
+};
+
+export const getBlogByFollow = (userId: number) => {
+  return axiosInstance.get(`/api/v1/auth/blogPosts/getBlogByFollow/${userId}`);
+};
+
+export const getMarkPostbyUser = (userId: number) => {
+  return axiosInstance.get(`/api/v1/auth/user/getMarkPost/${userId}`);
+};
+
+export const countBlogByAllCategory = () => {
+  return axiosInstance.get("/api/v1/auth/admin/countBlogByAllCategory");
+};
+
+export type blogPostApprove = {
+  postId: number;
+  reviewId: number;
+  reason: string;
+};
+
+export const getBlogByRequest = () => {
+  return axiosInstance.get(`/api/v1/auth/manageApprove/getBlogByRequest`);
+};
+export const approving = (action: string, data: blogPostApprove) => {
+  return axiosInstance.put(`/api/v1/auth/manageApprove/${action}`, data);
+};
+
+export const insertBookmark = (data: any, action: "mark" | "unMark") => {
+  return axiosInstance.post(`/api/v1/auth/user/markAction/${action}`, data);
+};
+
+export const checkBookmark = (data: any) => {
+  return axiosInstance.put("/api/v1/auth/user/checkMark", data);
+};
+
+export const getAllUserAdmin = () => {
+  return axiosInstance.get("/api/v1/auth/user/getAll");
+};

@@ -1,46 +1,36 @@
 import SearchTwoToneIcon from "@mui/icons-material/SearchTwoTone";
 
-import PersonAddAltTwoToneIcon from "@mui/icons-material/PersonAddAltTwoTone";
-import FlagTwoToneIcon from "@mui/icons-material/FlagTwoTone";
-
+import ModeEditOutlineTwoToneIcon from "@mui/icons-material/ModeEditOutlineTwoTone";
 import {
-  TextField,
-  Grid,
-  Stack,
-  InputAdornment,
-  Card,
-  Divider,
-  Pagination,
   Avatar,
-  Typography,
   Button,
-  styled,
+  Card,
+  CardContent,
+  CardHeader,
+  Divider,
+  Grid,
+  IconButton,
+  InputAdornment,
+  Pagination,
+  Stack,
+  TextField,
   Tooltip,
   TooltipProps,
+  Typography,
+  styled,
   tooltipClasses,
-  CardHeader,
-  IconButton,
-  CardContent,
-  AvatarGroup,
 } from "@mui/material";
-import { useState, useEffect, useCallback, ChangeEvent } from "react";
-import { useParams } from "react-router";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import {
   checkFollow,
   getBlogPostByAuthor,
   getCountViewOfBlogByUser,
-  getCountPostMarkByUser,
   getUserInfor,
-  getFollowerCount,
-  getFollowingCount,
 } from "../../APICall/apiConfig";
 import Loading from "../../components/Loading";
-import PostCard from "../../components/PostCard";
-import { userLogin, blog } from "../../config/TypeDefine";
-import { extractTextFromHtml } from "../../tools/extractTextFromHtml";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import PostCardMyProfile from "../../components/PostCardMyProfile";
-import ModeEditOutlineTwoToneIcon from "@mui/icons-material/ModeEditOutlineTwoTone";
+import { blog, userLogin } from "../../config/TypeDefine";
+import { extractTextFromHtml } from "../../tools/extractTextFromHtml";
 const SearchInputWrapper = styled(TextField)(
   ({ theme }) => `
         background: ${theme.colors.alpha.white[100]};
@@ -66,15 +56,12 @@ export default function Wall() {
     ? JSON.parse(localStorage.getItem("user") as string)
     : null;
   const [blogPost, setBlogPost] = useState<blog[]>([]);
-  const [followerCount, setFollowerCount] = useState<number | null>(null);
-  const [followingCount, setFollowingCount] = useState<number | null>(null);
+
   const userID = userCurrent.id.toString();
 
   const [totalPages, setTotalPages] = useState(1);
   const [countViewOfBlog, setCountViewOfBlog] = useState<number>(0);
-  const [countPostMark, setCountPostMark] = useState<number>(0);
 
-  const [blogPostsCount, setBlogPostsCount] = useState<number>(0);
   const [user, setUser] = useState<userLogin | null>(null);
 
   useEffect(() => {
@@ -120,14 +107,6 @@ export default function Wall() {
         console.log(error);
       });
 
-    getCountPostMarkByUser(userID)
-      .then((response) => {
-        console.log("getCountPostMarkByUser", response.data);
-        setCountPostMark(response.data.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
     getUserInfor(userID)
       .then((response) => {
         console.log("getUserInfor", response.data);
@@ -136,38 +115,7 @@ export default function Wall() {
       .catch((error) => {
         console.log(error);
       });
-  }, [
-    setBlogPost,
-    userID,
-
-    setTotalPages,
-    setCountViewOfBlog,
-    setCountPostMark,
-    setBlogPostsCount,
-    setUser,
-  ]);
-
-  useEffect(() => {
-    getFollowerCount(userID)
-      .then((response) => {
-        console.log("getFollowerCount", response.data.data);
-        setFollowerCount(response.data.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [setFollowerCount, userID]);
-
-  useEffect(() => {
-    getFollowingCount(userID)
-      .then((response) => {
-        console.log("getFollowerCount", response.data.data);
-        setFollowingCount(response.data.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [setFollowingCount, userID]);
+  }, [setBlogPost, userID, setTotalPages, setCountViewOfBlog, setUser]);
 
   const [page, setPage] = useState(1);
   let limitPostPerPage: number = 10;

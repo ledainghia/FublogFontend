@@ -1,9 +1,8 @@
+import AccountCircleTwoToneIcon from "@mui/icons-material/AccountCircleTwoTone";
+import BookTwoToneIcon from "@mui/icons-material/BookTwoTone";
 import { Grid, Stack, Typography } from "@mui/material";
 import BackGroundAboutProject from "../assets/images/background/shape-bg-1.png";
-import React from "react";
 import wawe from "../assets/images/wave.svg";
-import BookTwoToneIcon from "@mui/icons-material/BookTwoTone";
-import AccountCircleTwoToneIcon from "@mui/icons-material/AccountCircleTwoTone";
 import Footer from "./Footer";
 import SendUsMessage from "./SendUsMessage";
 export default function AboutProject() {

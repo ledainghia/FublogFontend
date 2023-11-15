@@ -15,13 +15,11 @@ import {
   styled,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import backgroundLeaderBoard from "../assets/images/background/backgroundLeaderboard.png";
 
 import { getAllUserByPoint } from "../APICall/apiConfig";
 import "../assets/css/text-effect.css";
 import Loading from "../components/Loading";
 import { userLogin } from "../config/TypeDefine";
-import { set } from "nprogress";
 const SearchInputWrapper = styled(TextField)(
   ({ theme }) => `
       background: ${theme.colors.alpha.white[100]};
@@ -98,7 +96,7 @@ export default function RankingContentCreator() {
               {user && user.length > 0 && (
                 <CardContent
                   sx={{
-                    backgroundImage: `url("https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")`,
+                    backgroundImage: `url("https://dribbble.com/shots/2781920-Take-a-Bow/attachments/9480760?mode=media")`,
                   }}
                 >
                   <Grid

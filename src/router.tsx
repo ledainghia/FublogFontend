@@ -1,20 +1,20 @@
 import { ComponentType, Suspense, lazy } from "react";
-import { Navigate } from "react-router-dom";
 import { RouteObject } from "react-router";
+import { Navigate } from "react-router-dom";
 
-import SidebarLayout from "./layouts/SidebarLayout";
 import BaseLayout from "./layouts/BaseLayout";
+import SidebarLayout from "./layouts/SidebarLayout";
 
-import SuspenseLoader from "./components/SuspenseLoader";
-import WriteBlog from "./Pages/WriteBlog";
-import Navigation from "./Pages/Navigation";
-import AboutProject from "./components/aboutProject";
-import SingleBlog from "./Pages/SingleBlog";
-import YourComponent from "./tools/tableOfContentsReplace";
-import Profile from "./Pages/Profile";
+import AdminPage from "./Pages/AdminPage";
+import Dashboard from "./Pages/Dashboard";
 import MyProfile from "./Pages/MyProfile";
 import AccountSettings from "./Pages/MyProfile/AccountSettings";
 import Wall from "./Pages/MyProfile/Wall";
+import Navigation from "./Pages/Navigation";
+import Profile from "./Pages/Profile";
+import SingleBlog from "./Pages/SingleBlog";
+import WriteBlog from "./Pages/WriteBlog";
+import SuspenseLoader from "./components/SuspenseLoader";
 import BlogPosts from "./components/TestGrap";
 
 export const Loader = (Component: ComponentType<any>) => (props: any) =>
@@ -27,7 +27,7 @@ export const Loader = (Component: ComponentType<any>) => (props: any) =>
 // Pages
 const HomePage = Loader(lazy(() => import("./Pages/HomePage")));
 const LoginPage = Loader(lazy(() => import("./Pages/LoginPage")));
-const aboutProject = Loader(lazy(() => import("./components/aboutProject")));
+
 // const Overview = Loader(lazy(() => import('src/content/overview')));
 
 // Dashboards
@@ -104,10 +104,6 @@ const routes: RouteObject[] = [
     element: <SidebarLayout />,
     children: [
       {
-        path: "",
-        element: <Navigate to={"/test"} />,
-      },
-      {
         path: "home",
         element: <HomePage />,
       },
@@ -124,7 +120,7 @@ const routes: RouteObject[] = [
         element: <WriteBlog />,
       },
       {
-        path: "test",
+        path: "",
         element: <Navigation />,
       },
       {
@@ -151,6 +147,27 @@ const routes: RouteObject[] = [
         element: <MyProfile children={<AccountSettings />} />,
       },
       { path: "userprofile", element: <MyProfile children={<Wall />} /> },
+    ],
+  },
+
+  {
+    path: "admin",
+    element: <BaseLayout />,
+    children: [
+      {
+        path: "dashboard",
+        element: <SidebarLayout />,
+        children: [
+          {
+            path: "",
+            element: <Dashboard />,
+          },
+        ],
+      },
+      {
+        path: "",
+        element: <AdminPage />,
+      },
     ],
   },
 ];

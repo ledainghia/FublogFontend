@@ -2,29 +2,28 @@
 import { SyntheticEvent, useEffect, useState } from "react";
 
 // ** MUI Imports
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
+import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import TabContext from "@mui/lab/TabContext";
-import { styled } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
 import MuiTab, { TabProps } from "@mui/material/Tab";
+import { styled } from "@mui/material/styles";
 
 // ** Icons Imports
 import AccountOutline from "mdi-material-ui/AccountOutline";
-import LockOpenOutline from "mdi-material-ui/LockOpenOutline";
 import InformationOutline from "mdi-material-ui/InformationOutline";
+import LockOpenOutline from "mdi-material-ui/LockOpenOutline";
 
 // ** Demo Tabs Imports
-import TabInfo from "./view/TabInfo";
 import TabAccount from "./view/TabAccount";
+import TabInfo from "./view/TabInfo";
 import TabSecurity from "./view/TabSecurity";
 
 // ** Third Party Styles Imports
 import "react-datepicker/dist/react-datepicker.css";
-import { userLogin } from "../../config/TypeDefine";
-import { getUserInfoFromLocal } from "../../tools/getUserInfoFromLocal";
 import { getUserInfor } from "../../APICall/apiConfig";
+import { getUserInfoFromLocal } from "../../tools/getUserInfoFromLocal";
 
 const Tab = styled(MuiTab)<TabProps>(({ theme }) => ({
   [theme.breakpoints.down("md")]: {
@@ -47,8 +46,9 @@ const TabName = styled("span")(({ theme }) => ({
 const AccountSettings = () => {
   // ** State
   const [value, setValue] = useState<string>("account");
-  const [userInfo, setUserInfo] = useState<userLogin | null>(null);
+
   const handleChange = (event: SyntheticEvent, newValue: string) => {
+    event.preventDefault();
     setValue(newValue);
   };
   const [flag, setFlag] = useState<boolean>(true);
@@ -59,8 +59,6 @@ const AccountSettings = () => {
       if (!userID) return;
       else {
         const res = await getUserInfor(userID.toString());
-        const user: userLogin | null = res.data.data;
-        setUserInfo(user);
         console.log(res.data.data);
         setFlag(false);
       }

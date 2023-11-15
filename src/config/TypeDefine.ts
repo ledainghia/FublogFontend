@@ -1,4 +1,5 @@
 export interface blog {
+  reason: string;
   typePost: string;
   title: string;
   content: string;
@@ -18,6 +19,7 @@ export interface blog {
   blogPostCount: number;
   commentCount: number;
   voteCount: number;
+  bookMarkCount: number;
 }
 
 export interface tagList {
@@ -45,4 +47,9 @@ export type categories = {
   categoryId: number;
   categoryName: string;
   parentCategoryId: number | null;
+};
+
+export type blogCategoriesType = {
+  numBlog: number;
+  categoryName: string;
 };

@@ -1,31 +1,31 @@
 // ** React Imports
 import {
-  useState,
-  ElementType,
   ChangeEvent,
+  ElementType,
   SyntheticEvent,
   useEffect,
+  useState,
 } from "react";
 
 // ** MUI Imports
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import Link from "@mui/material/Link";
 import Alert from "@mui/material/Alert";
-import Select from "@mui/material/Select";
-import { styled } from "@mui/material/styles";
-import MenuItem from "@mui/material/MenuItem";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
-import InputLabel from "@mui/material/InputLabel";
 import AlertTitle from "@mui/material/AlertTitle";
-import IconButton from "@mui/material/IconButton";
+import Box from "@mui/material/Box";
+import Button, { ButtonProps } from "@mui/material/Button";
 import CardContent from "@mui/material/CardContent";
 import FormControl from "@mui/material/FormControl";
-import Button, { ButtonProps } from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import IconButton from "@mui/material/IconButton";
+import InputLabel from "@mui/material/InputLabel";
+import Link from "@mui/material/Link";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import { styled } from "@mui/material/styles";
+import { getUserInfor } from "../../../APICall/apiConfig";
 import { userLogin } from "../../../config/TypeDefine";
 import { getUserInfoFromLocal } from "../../../tools/getUserInfoFromLocal";
-import { getUserInfor } from "../../../APICall/apiConfig";
 
 // ** Icons Imports
 
@@ -54,18 +54,13 @@ const ResetButtonStyled = styled(Button)<ButtonProps>(({ theme }) => ({
     marginTop: theme.spacing(4),
   },
 }));
-type props = {
-  user: userLogin | null;
-};
+
 const TabAccount = () => {
   // ** State
   const [openAlert, setOpenAlert] = useState<boolean>(true);
 
-  const [value, setValue] = useState<string>("account");
   const [userInfo, setUserInfo] = useState<userLogin | null>(null);
-  const handleChange = (event: SyntheticEvent, newValue: string) => {
-    setValue(newValue);
-  };
+
   const [flag, setFlag] = useState<boolean>(true);
 
   const getUserInfo = async () => {

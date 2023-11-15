@@ -875,7 +875,7 @@ export const PureLightTheme = createTheme({
           transition: "all .2s",
 
           "&:hover, &:active, &.active, &.Mui-selected": {
-            color: colors.alpha.white[100],
+            color: colors.alpha.black[100],
             background: alpha(colors.primary.lighter, 0.4),
           },
           "&.Mui-selected:hover": {

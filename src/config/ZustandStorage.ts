@@ -163,6 +163,6 @@ interface tabNavStore {
 }
 
 export const useTabNavStore = create<tabNavStore>((set) => ({
-  tabIndex: 0,
+  tabIndex: 1,
   setTabIndex: (value: number) => set({ tabIndex: value }),
 }));

@@ -1,36 +1,27 @@
-import axios from "axios";
-import { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
-import { blog } from "../config/TypeDefine";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
 import {
-  Avatar,
   Box,
-  Button,
   Card,
-  CardContent,
   Container,
-  Divider,
   Grid,
   IconButton,
-  Paper,
   Stack,
-  TextareaAutosize,
   Typography,
 } from "@mui/material";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import EditorRend from "../components/ckEditorView";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import "../assets/css/ckeditor.css";
-import TableOfContents from "../components/TableOfContents";
-import tableOfContentsReplace from "../tools/tableOfContentsReplace";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-import BookmarkIcon from "@mui/icons-material/Bookmark";
+import EditorRend from "../components/ckEditorView";
+import { blog } from "../config/TypeDefine";
 
 export default function SingleBlog() {
   const { id } = useParams<{ id: string }>();
   const [post, setPost] = useState<blog | null>(null);
   const [content, setContent] = useState<string>("");
-  const [tableOfContents, setTableOfContents] = useState<string>("");
 
   useEffect(() => {
     async function fetchPost() {
@@ -54,8 +45,6 @@ export default function SingleBlog() {
     fetchPost();
   }, [id]);
 
-  const [headings, setHeadings] = useState([]);
-
   useEffect(() => {
     const elements = Array.from(document.querySelectorAll("h2, h3, h4")).map(
       (elem) => ({
@@ -64,8 +53,6 @@ export default function SingleBlog() {
     );
     console.log(elements);
   }, []);
-
-  const [contentWithAnchors, setContentWithAnchors] = useState<string>("");
 
   // useEffect(() => {
   //   const handleScroll = () => {
@@ -155,20 +142,10 @@ export default function SingleBlog() {
                 ></CKEditor>
               </div>
             </Grid>
-            {/* <Grid item xs={3}>
-              <h1>Table of Contents</h1>
-              <div className="preview_tableofcontent">
-                <CKEditor
-                  editor={EditorRend}
-                  disabled
-                  data={content}
-                ></CKEditor>
-              </div>
-            </Grid> */}
           </Grid>
         </Card>
 
-        <Card sx={{ mt: 3 }}>
+        {/* <Card sx={{ mt: 3 }}>
           <CardContent>
             <Typography variant="h3">Comment</Typography>
             <Stack direction={"column"}>
@@ -300,7 +277,7 @@ export default function SingleBlog() {
               Submit
             </Button>
           </CardContent>
-        </Card>
+        </Card> */}
       </Container>
     </>
   );

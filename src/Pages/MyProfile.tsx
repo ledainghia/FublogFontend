@@ -1,10 +1,7 @@
-import { Box, Grid, useTheme } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
+import Footer from "../components/Footer";
 import Header from "../layouts/SidebarLayout/Header";
 import Sidebar from "../layouts/SidebarLayout/Sidebar";
-import { Outlet } from "react-router";
-import HomePage from "./HomePage";
-import Footer from "../components/Footer";
-import AccountSettings from "./MyProfile/AccountSettings";
 
 export default function MyProfile({ children }: { children: React.ReactNode }) {
   const theme = useTheme();

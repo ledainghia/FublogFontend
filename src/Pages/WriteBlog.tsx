@@ -60,7 +60,6 @@ const ResetButtonStyled = styled(Button)<ButtonProps>(({ theme }) => ({
 }));
 
 export default function WriteBlog() {
-  const [openAlert, setOpenAlert] = useState<boolean>(true);
   const [imgSrc, setImgSrc] = useState<string>("");
   const [isFilePicked, setIsFilePicked] = useState(false);
   const [value, setValue] = useState("");
@@ -70,7 +69,7 @@ export default function WriteBlog() {
   const [choiceCategory, setChoiceCategory] = useState<string | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
   const { setTabIndex } = useTabNavStore();
-  var imageUTL = "";
+
   const uploadImageToFirebase = async (image: File) => {
     if (image && image.type.startsWith("image/")) {
       if (image?.size && image?.size > 20000000) {
@@ -96,10 +95,11 @@ export default function WriteBlog() {
           },
           () => {
             // download url
+
             getDownloadURL(uploadTask.snapshot.ref).then((url) => {
               addToastSuccess("Upload image success");
               setImageURL(url);
-              imageUTL = url;
+
               console.log(url);
             });
           }
@@ -318,6 +318,7 @@ export default function WriteBlog() {
                     <CKEditor
                       editor={Editor}
                       onChange={(event, editor) => {
+                        console.log(event);
                         setValue(editor.getData());
                         console.log(editor.getData());
                       }}

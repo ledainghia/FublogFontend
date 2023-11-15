@@ -4,15 +4,12 @@ import loginVector from "../assets/images/graphic3.svg";
 import logo from "../assets/images/logo-light.svg";
 import LoginComponent from "../components/login/LoginComponent";
 import SignupComponent from "../components/login/SignupComponent";
-import { useForgetStore } from "../config/ZustandStorage";
 
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
   value: number;
 }
-
-const label = { inputProps: { "aria-label": "Switch demo" } };
 
 function CustomTabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
@@ -31,7 +28,6 @@ function CustomTabPanel(props: TabPanelProps) {
   );
 }
 export default function LoginPage() {
-  const { isForgotten } = useForgetStore();
   const [value, setValue] = useState(0);
 
   function a11yProps(index: number) {
@@ -42,6 +38,7 @@ export default function LoginPage() {
   }
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    event.preventDefault();
     setValue(newValue);
   };
 
