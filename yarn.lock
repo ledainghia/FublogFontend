@@ -3366,6 +3366,11 @@
   dependencies:
     undici-types "~5.26.4"
 
+"@types/nprogress@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.npmjs.org/@types/nprogress/-/nprogress-0.2.3.tgz"
+  integrity sha512-k7kRA033QNtC+gLc4VPlfnue58CM1iQLgn1IMAU8VPHGOj7oIHPp9UlhedEnD/Gl8evoCjwkZjlBORtZ3JByUA==
+
 "@types/parse-json@^4.0.0":
   version "4.0.1"
   resolved "https://registry.npmjs.org/@types/parse-json/-/parse-json-4.0.1.tgz"
@@ -6646,7 +6651,7 @@ fs.realpath@^1.0.0:
     "@mui/x-data-grid" "^6.18.1"
     "@types/react" "17.0.40"
     "@types/react-dom" "17.0.13"
-    apexcharts "3.35.3"
+    apexcharts "^3.35.3"
     axios "^1.6.0"
     ckeditor5-custom-build "file:ckeditor5"
     clsx "1.1.1"
@@ -6662,7 +6667,7 @@ fs.realpath@^1.0.0:
     numeral "2.0.6"
     prop-types "15.8.1"
     react "17.0.2"
-    react-apexcharts "1.4.0"
+    react-apexcharts "^1.4.0"
     react-custom-scrollbars-2 "4.4.0"
     react-datepicker "^4.21.0"
     react-dom "17.0.2"
