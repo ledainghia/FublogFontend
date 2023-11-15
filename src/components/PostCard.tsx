@@ -54,7 +54,7 @@ type props = {
 export default function PostCard({ blogPost }: props) {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [isFollowed, setIsFollowed] = useState(false);
-  const userId = getUserInfoFromLocal().id;
+  const userId = getUserInfoFromLocal().id || 4;
   const { addToastSuccess } = useToastSuccessStore();
   const { addToastError } = useToastErrorStore();
   const [flag, setFlag] = useState(false);
@@ -84,7 +84,7 @@ export default function PostCard({ blogPost }: props) {
   }, [isBookmarked, isFollowed, flag]);
 
   async function handleInsertBookmark(): Promise<void> {
-    const userId = getUserInfoFromLocal().id;
+    const userId = getUserInfoFromLocal().id || 4;
     const data = {
       postId: blogPost.postId,
       userId: userId,

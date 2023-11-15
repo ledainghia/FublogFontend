@@ -217,7 +217,7 @@ export default function HomePage() {
   return (
     <>
       <Helmet>
-        <title>Content Creater</title>
+        <title>Home page</title>
       </Helmet>
 
       <Container maxWidth="lg">
@@ -251,18 +251,23 @@ export default function HomePage() {
                       label="trending"
                       {...a11yProps(1)}
                     />
-                    <Tab
-                      sx={{ fontSize: 15 }}
-                      wrapped
-                      label="Follow"
-                      {...a11yProps(2)}
-                    />
-                    <Tab
-                      sx={{ fontSize: 15 }}
-                      wrapped
-                      label="bookmarks"
-                      {...a11yProps(3)}
-                    />
+
+                    {getUserInfoFromLocal().id && (
+                      <Tab
+                        sx={{ fontSize: 15 }}
+                        wrapped
+                        label="Follow"
+                        {...a11yProps(2)}
+                      />
+                    )}
+                    {getUserInfoFromLocal().id && (
+                      <Tab
+                        sx={{ fontSize: 15 }}
+                        wrapped
+                        label="Bookmark"
+                        {...a11yProps(3)}
+                      />
+                    )}
                   </Tabs>
                 }
                 action={

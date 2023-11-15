@@ -4,5 +4,6 @@ export function getUserInfoFromLocal() {
     const user = JSON.parse(userStr);
     return user;
   }
-  return null;
+
+  return {};
 }
