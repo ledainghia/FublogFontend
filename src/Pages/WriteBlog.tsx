@@ -121,6 +121,14 @@ export default function WriteBlog() {
       setIsFilePicked(false);
     }
   };
+  const navigation = useNavigate();
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (!user) {
+      navigation("/login");
+      addToastError("You must login to write blog");
+    }
+  });
 
   const [categories, setCategories] = useState<categories[]>([]);
   const [flag, setFlag] = useState<boolean>(false);
